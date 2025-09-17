@@ -77,10 +77,10 @@ namespace Kulipa.Sdk.Webhooks
                     VerificationFailureReason.InvalidTimestampFormat);
             }
 
-            var webhookTime = DateTimeOffset.FromUnixTimeSeconds(timestampValue).UtcDateTime;
+            var webhookTime = DateTimeOffset.FromUnixTimeMilliseconds(timestampValue).UtcDateTime;
             var now = DateTime.UtcNow;
 
-            if (webhookTime > now.AddMinutes(1)) // Allow 1 minute clock skew for future
+            if (webhookTime > now.AddMinutes(1)) // Allow 1-minute clock skew for future
             {
                 _logger.LogWarning("Webhook verification failed: timestamp in future: {WebhookTime}", webhookTime);
                 return WebhookVerificationResult.Failure(
@@ -216,33 +216,25 @@ namespace Kulipa.Sdk.Webhooks
             return false;
         }
 
-        private bool VerifyEcdsaSignature(string publicKeyPem, string message, string signatureBase64)
+        private bool VerifyEcdsaSignature(string publicKey, string message, string signature)
         {
             try
             {
-                // Decode the base64 signature
-                var signatureBytes = Convert.FromBase64String(signatureBase64);
+                // Decode the hex signature
+                var signatureBytes = Convert.FromHexString(signature);
 
                 // Convert message to bytes
                 var messageBytes = Encoding.UTF8.GetBytes(message);
 
-                // Parse the PEM public key
+                // Import the PEM public key
                 using var ecdsa = ECDsa.Create();
-
-                // Remove PEM headers/footers and decode
-                var pemContent = publicKeyPem
-                    .Replace("-----BEGIN PUBLIC KEY-----", "")
-                    .Replace("-----END PUBLIC KEY-----", "")
-                    .Replace("\r", "")
-                    .Replace("\n", "");
-
-                var publicKeyBytes = Convert.FromBase64String(pemContent);
-
-                // Import the public key
-                ecdsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
+                ecdsa.ImportFromPem(publicKey);
 
                 // Verify the signature
-                return ecdsa.VerifyData(messageBytes, signatureBytes, HashAlgorithmName.SHA256);
+                return ecdsa.VerifyData(messageBytes,
+                    signatureBytes,
+                    HashAlgorithmName.SHA256,
+                    DSASignatureFormat.Rfc3279DerSequence);
             }
             catch (Exception ex)
             {

@@ -34,7 +34,7 @@ namespace Kulipa.Sdk.Tests.Integration
             services.AddKulipaSdk(options =>
             {
                 options.ApiKey = "test-api-key";
-                options.BaseUrl = "https://api-sandbox.kulipa.com";
+                options.BaseUrl = "https://api.testing.kulipa.dev/v1/";
                 options.Environment = KulipaEnvironment.Sandbox;
                 options.WebhookTimestampTolerance = TimeSpan.FromMinutes(5);
             });
@@ -54,22 +54,19 @@ namespace Kulipa.Sdk.Tests.Integration
             // Arrange - Simulate a webhook from Kulipa
             var webhookPayload = new
             {
-                eventType = "card.created",
-                timestamp = DateTime.UtcNow,
-                data = new
-                {
-                    cardId = "card_123456",
-                    accountId = "acc_789012",
-                    status = "active"
-                }
+                userId = "usr-b036777a-d790-4cd3-a3d5-3bc1982eccc2",
+                eventId = "bd4624fd-ca50-4698-8558-354e522f4416",
+                eventName = "card.created",
+                eventTargetId = "crd-3d3bb4df-280d-45f1-807a-ae1f54506a35"
             };
 
             var rawBody = JsonSerializer.Serialize(webhookPayload);
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-            var keyId = "test-key-id";
+            var timestamp = "1758011225399";
+            var keyId = "dwk-d5418756-4908-4077-b053-3bc662820f85";
 
             // In a real scenario, Kulipa would sign this with their private key
-            var signature = _webhookSender.GenerateSignature(rawBody, timestamp);
+            var signature =
+                "304402202c1365b6bf4aadd370592c6dcd0623c5ea2f18ef22f2d1799816c3c23fa7914c022005c2dbff467214357461ba178ff9a405a525c70867346a029bba0173bb47479e";
 
             var headers = new Dictionary<string, string>
             {
@@ -96,16 +93,29 @@ namespace Kulipa.Sdk.Tests.Integration
         public async Task VerifyWebhook_TamperedBody_FailsVerification()
         {
             // Arrange
-            var originalPayload = new { eventType = "card.created", amount = 100 };
-            var tamperedPayload = new { eventType = "card.created", amount = 1000 }; // Tampered!
+            var originalPayload = new
+            {
+                userId = "usr-b036777a-d790-4cd3-a3d5-3bc1982eccc2",
+                eventId = "bd4624fd-ca50-4698-8558-354e522f4416",
+                eventName = "card.created",
+                eventTargetId = "crd-3d3bb4df-280d-45f1-807a-ae1f54506a35"
+            };
+            var tamperedPayload = new
+            {
+                userId = "usr-b036777a-d790-4cd3-a3d5-3bc1982eccc2",
+                eventId = "bd4624fd-ca50-4698-8558-354e522f4416",
+                eventName = "card.created",
+                eventTargetId = "crd-3d3bb4df-280d-45f1-807a-ae1f54506a34"
+            };
 
             var originalBody = JsonSerializer.Serialize(originalPayload);
             var tamperedBody = JsonSerializer.Serialize(tamperedPayload);
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-            var keyId = "test-key-id";
+            var timestamp = "1758011225399";
+            var keyId = "dwk-d5418756-4908-4077-b053-3bc662820f85";
 
             // Sign the original body
-            var signature = _webhookSender.GenerateSignature(originalBody, timestamp);
+            var signature =
+                "304402202c1365b6bf4aadd370592c6dcd0623c5ea2f18ef22f2d1799816c3c23fa7914c022005c2dbff467214357461ba178ff9a405a525c70867346a029bba0173bb47479e";
 
             var headers = new Dictionary<string, string>
             {

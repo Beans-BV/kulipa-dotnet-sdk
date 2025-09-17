@@ -1,6 +1,7 @@
 using System.Net;
 using Kulipa.Sdk.Configuration;
 using Kulipa.Sdk.Core;
+using Kulipa.Sdk.Resources;
 using Kulipa.Sdk.Services.Authentication;
 using Kulipa.Sdk.Services.Http;
 using Microsoft.Extensions.Options;
@@ -52,7 +53,7 @@ namespace Kulipa.Sdk.Extensions
             services.AddTransient<IdempotencyHandler>();
 
             // Register HTTP client for the main client
-            services.AddHttpClient<IKulipaClient, KulipaClient>((serviceProvider, client) =>
+            services.AddHttpClient<IKulipaClient, KulipaClient>(nameof(KulipaClient), (serviceProvider, client) =>
                 {
                     var options = serviceProvider.GetRequiredService<IOptions<KulipaSdkOptions>>();
                     ConfigureHttpClient(client, options.Value);
@@ -97,6 +98,8 @@ namespace Kulipa.Sdk.Extensions
             // Add webhook services
             services.AddKulipaWebhookServices();
 
+            services.AddScoped<ICardsResource, CardsResource>();
+            services.AddScoped<IWebhooksResource, WebhooksResource>();
             // Add other resources as they're implemented
             // services.AddScoped<IUsersResource, UsersResource>();
             // services.AddScoped<ITransactionsResource, TransactionsResource>();

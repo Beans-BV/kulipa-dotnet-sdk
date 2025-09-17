@@ -1,6 +1,9 @@
+using Kulipa.Sdk.Configuration;
+using Kulipa.Sdk.Core;
 using Kulipa.Sdk.Resources;
 using Kulipa.Sdk.Webhooks;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Kulipa.Sdk.Extensions
 {
@@ -18,7 +21,16 @@ namespace Kulipa.Sdk.Extensions
         internal static IServiceCollection AddKulipaWebhookServices(this IServiceCollection services)
         {
             // Register webhook verification services
-            services.TryAddSingleton<IPublicKeyCache, MemoryPublicKeyCache>();
+            services.AddSingleton<IPublicKeyCache>(serviceProvider =>
+            {
+                var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+                // Reuse HTTP client
+                var httpClient = httpClientFactory.CreateClient(nameof(KulipaClient)); 
+                var logger = serviceProvider.GetRequiredService<ILogger<MemoryPublicKeyCache>>();
+                var options = serviceProvider.GetRequiredService<IOptions<KulipaSdkOptions>>();
+                return new MemoryPublicKeyCache(httpClient, logger, options);
+            });
+
             services.TryAddSingleton<IWebhookVerifier, WebhookVerifier>();
             services.TryAddScoped<IWebhooksResource, WebhooksResource>();
 
