@@ -32,25 +32,4 @@ namespace Kulipa.Sdk.Models.Common
         [JsonPropertyName("items")]
         public List<T> Items { get; set; } = [];
     }
-
-    /// <summary>
-    ///     Query parameters for paged requests.
-    /// </summary>
-    public class PagedRequest
-    {
-        /// <summary>
-        ///     A limit on the number of objects returned (1-100).
-        /// </summary>
-        public int Limit { get; set; } = 10;
-
-        /// <summary>
-        ///     Designates the start page in the sort order.
-        /// </summary>
-        public int FromPage { get; set; } = 0;
-
-        /// <summary>
-        ///     Field to sort by.
-        /// </summary>
-        public string SortBy { get; set; } = "createdAt";
-    }
 }

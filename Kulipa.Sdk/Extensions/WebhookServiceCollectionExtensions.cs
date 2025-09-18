@@ -25,7 +25,7 @@ namespace Kulipa.Sdk.Extensions
             {
                 var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
                 // Reuse HTTP client
-                var httpClient = httpClientFactory.CreateClient(nameof(KulipaClient)); 
+                var httpClient = httpClientFactory.CreateClient(nameof(KulipaClient));
                 var logger = serviceProvider.GetRequiredService<ILogger<MemoryPublicKeyCache>>();
                 var options = serviceProvider.GetRequiredService<IOptions<KulipaSdkOptions>>();
                 return new MemoryPublicKeyCache(httpClient, logger, options);

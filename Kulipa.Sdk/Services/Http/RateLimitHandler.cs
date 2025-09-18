@@ -8,9 +8,9 @@ namespace Kulipa.Sdk.Services.Http
     /// </summary>
     public class RateLimitHandler : DelegatingHandler
     {
+        private readonly object _lockObject = new();
         private readonly ILogger<RateLimitHandler> _logger;
         private readonly SemaphoreSlim _semaphore;
-        private readonly object _lockObject = new();
         private int _remainingRequests = 300;
         private DateTime _resetTime = DateTime.UtcNow.AddMinutes(1);
 

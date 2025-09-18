@@ -26,7 +26,6 @@
         <Folder Include="Models\Transactions\"/>
         <Folder Include="Models\Users\"/>
         <Folder Include="Models\Verification\"/>
-        <Folder Include="Models\Wallet\"/>
         <Folder Include="Services\Serialization\"/>
     </ItemGroup>
 

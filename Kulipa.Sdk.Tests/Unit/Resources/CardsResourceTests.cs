@@ -6,7 +6,6 @@ using Kulipa.Sdk.Exceptions;
 using Kulipa.Sdk.Models.Cards;
 using Kulipa.Sdk.Models.Common;
 using Kulipa.Sdk.Resources;
-using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
@@ -19,20 +18,18 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
         private CardsResource _cardsResource = null!;
         private HttpClient _httpClient = null!;
         private Mock<HttpMessageHandler> _httpMessageHandlerMock = null!;
-        private Mock<ILogger<CardsResource>> _loggerMock = null!;
 
         [TestInitialize]
         public void Initialize()
         {
             _httpMessageHandlerMock = new Mock<HttpMessageHandler>();
-            _loggerMock = new Mock<ILogger<CardsResource>>();
 
             _httpClient = new HttpClient(_httpMessageHandlerMock.Object)
             {
                 BaseAddress = new Uri("https://api.kulipa.com")
             };
 
-            _cardsResource = new CardsResource(_httpClient, _loggerMock.Object);
+            _cardsResource = new CardsResource(_httpClient);
         }
 
         [TestCleanup]
@@ -203,7 +200,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
 
             // Act & Assert
             var exception =
-                await Assert.ThrowsExceptionAsync<KulipaAuthenticationException>(() =>
+                await Assert.ThrowsExactlyAsync<KulipaAuthenticationException>(() =>
                     _cardsResource.CreateAsync(request));
 
             exception.RequestId.Should().Be("req-456");
@@ -339,7 +336,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             capturedRequest.Should().NotBeNull();
             capturedRequest!.RequestUri!.Query.Should().Contain("limit=10");
             capturedRequest.RequestUri.Query.Should().Contain("fromPage=0");
-            capturedRequest.RequestUri.Query.Should().Contain("sortBy=createdAt");
+            capturedRequest.RequestUri.Query.Should().Contain("sortBy=-createdAt");
         }
 
         [TestMethod]
@@ -397,7 +394,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.Is<HttpRequestMessage>(req =>
-                        req.Method == HttpMethod.Post &&
+                        req.Method == HttpMethod.Put &&
                         req.RequestUri!.PathAndQuery == $"/cards/{cardId}/freeze"),
                     ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(httpResponse);

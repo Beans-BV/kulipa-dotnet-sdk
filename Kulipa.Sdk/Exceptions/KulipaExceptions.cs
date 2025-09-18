@@ -27,7 +27,8 @@ namespace Kulipa.Sdk.Exceptions
     /// </summary>
     public class KulipaApiException : KulipaException
     {
-        public KulipaApiException(string message, string? responseContent = null, string? requestId = null, HttpStatusCode? statusCode = null)
+        public KulipaApiException(string message, string? responseContent = null, string? requestId = null,
+            HttpStatusCode? statusCode = null)
             : base(message, requestId)
         {
             ResponseContent = responseContent;
