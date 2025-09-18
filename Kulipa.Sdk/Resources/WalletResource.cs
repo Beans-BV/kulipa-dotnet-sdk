@@ -122,7 +122,6 @@ namespace Kulipa.Sdk.Resources
                     query["createdSince"] = createdSince.Value.ToString("yyyy-MM-ddTHH:mm:ssZ");
                 }
 
-
                 if (statuses == null)
                 {
                     return;

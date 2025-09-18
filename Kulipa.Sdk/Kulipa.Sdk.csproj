@@ -23,9 +23,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Models\Transactions\"/>
-        <Folder Include="Models\Users\"/>
-        <Folder Include="Models\Verification\"/>
+        <Folder Include="Models\Kyc\"/>
         <Folder Include="Services\Serialization\"/>
     </ItemGroup>
 

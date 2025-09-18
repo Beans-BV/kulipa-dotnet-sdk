@@ -13,7 +13,7 @@ namespace Kulipa.Sdk.Models.Wallets
         public required string TokenId { get; set; }
 
         /// <summary>
-        ///     Amount to withdraw in token decimal precision. (e.g. 1000000 for 1 USDC)
+        ///     Amount to withdraw in token decimal precision (e.g. 1000000 for 1 USDC).
         /// </summary>
         [Required]
         [JsonPropertyName("amount")]

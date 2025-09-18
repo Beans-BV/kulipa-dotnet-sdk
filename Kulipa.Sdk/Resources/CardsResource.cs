@@ -111,5 +111,35 @@ namespace Kulipa.Sdk.Resources
                 idempotencyKey,
                 cancellationToken);
         }
+
+        /// <inheritdoc />
+        public async Task<TokenResponse> GeneratePinCodeTokenAsync(
+            string cardId,
+            string? idempotencyKey = null,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateId(cardId, nameof(cardId));
+
+            return await PostAsync<object, TokenResponse>(
+                $"/cards/{cardId}/pincode",
+                new { },
+                idempotencyKey,
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<TokenResponse> GeneratePanTokenAsync(
+            string cardId,
+            string? idempotencyKey = null,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateId(cardId, nameof(cardId));
+
+            return await PostAsync<object, TokenResponse>(
+                $"/cards/{cardId}/pan",
+                new { },
+                idempotencyKey,
+                cancellationToken);
+        }
     }
 }

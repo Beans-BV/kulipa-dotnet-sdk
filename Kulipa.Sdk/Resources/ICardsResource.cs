@@ -91,5 +91,29 @@ namespace Kulipa.Sdk.Resources
             string cardId,
             string? idempotencyKey = null,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     A POST request to generate a token to view a card's PIN code.
+        ///     <param name="cardId">A card identifier.</param>
+        ///     <param name="idempotencyKey">Optional idempotency key for the request.</param>
+        ///     <param name="cancellationToken">Cancellation token.</param>
+        /// </summary>
+        /// <returns>Token response containing tokenId and callbackUrl.</returns>
+        Task<TokenResponse> GeneratePinCodeTokenAsync(
+            string cardId,
+            string? idempotencyKey = null,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     A POST request to generate a token to view a card's PAN.
+        ///     <param name="cardId">A card identifier.</param>
+        ///     <param name="idempotencyKey">Optional idempotency key for the request.</param>
+        ///     <param name="cancellationToken">Cancellation token.</param>
+        /// </summary>
+        /// <returns>Token response containing tokenId and callbackUrl.</returns>
+        Task<TokenResponse> GeneratePanTokenAsync(
+            string cardId,
+            string? idempotencyKey = null,
+            CancellationToken cancellationToken = default);
     }
 }
