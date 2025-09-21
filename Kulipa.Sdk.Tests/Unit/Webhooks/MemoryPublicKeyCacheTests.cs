@@ -10,7 +10,7 @@ using Moq;
 using Moq.Protected;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-namespace Kulipa.Sdk.Tests.Webhooks
+namespace Kulipa.Sdk.Tests.Unit.Webhooks
 {
     [TestClass]
     public class MemoryPublicKeyCacheTests
@@ -163,10 +163,6 @@ namespace Kulipa.Sdk.Tests.Webhooks
             };
 
             var json = JsonSerializer.Serialize(webhookKey);
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(json, Encoding.UTF8, "application/json")
-            };
 
             _mockHttpHandler
                 .Protected()
@@ -174,7 +170,10 @@ namespace Kulipa.Sdk.Tests.Webhooks
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(response);
+                .ReturnsAsync(() => new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(json, Encoding.UTF8, "application/json")
+                });
 
             // Act
             var result1 = await cache.GetKeyAsync(keyId);
@@ -214,10 +213,6 @@ namespace Kulipa.Sdk.Tests.Webhooks
             };
 
             var json = JsonSerializer.Serialize(webhookKey);
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(json, Encoding.UTF8, "application/json")
-            };
 
             _mockHttpHandler
                 .Protected()
@@ -225,7 +220,10 @@ namespace Kulipa.Sdk.Tests.Webhooks
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(response);
+                .ReturnsAsync(() => new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(json, Encoding.UTF8, "application/json")
+                });
 
             // Act
             var result1 = await _cache.GetKeyAsync(keyId);
@@ -263,7 +261,7 @@ namespace Kulipa.Sdk.Tests.Webhooks
                     "SendAsync",
                     ItExpr.Is<HttpRequestMessage>(req => req.RequestUri!.ToString().Contains(keyId1)),
                     ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
+                .ReturnsAsync(() => new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(JsonSerializer.Serialize(webhookKey1), Encoding.UTF8,
                         "application/json")
@@ -275,7 +273,7 @@ namespace Kulipa.Sdk.Tests.Webhooks
                     "SendAsync",
                     ItExpr.Is<HttpRequestMessage>(req => req.RequestUri!.ToString().Contains(keyId2)),
                     ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
+                .ReturnsAsync(() => new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(JsonSerializer.Serialize(webhookKey2), Encoding.UTF8,
                         "application/json")

@@ -17,13 +17,11 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
         public void WebhooksResource_ImplementsIWebhooksResource()
         {
             // Arrange
-            var httpClient = new HttpClient();
             var mockVerifier = new Mock<IWebhookVerifier>();
             var mockCache = new Mock<IPublicKeyCache>();
-            var logger = new Mock<ILogger<WebhooksResource>>().Object;
 
             // Act
-            var resource = new WebhooksResource(httpClient, mockVerifier.Object, mockCache.Object, logger);
+            var resource = new WebhooksResource(mockVerifier.Object, mockCache.Object);
 
             // Assert
             Assert.IsInstanceOfType(resource, typeof(IWebhooksResource));
@@ -33,10 +31,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
         public void WebhooksResource_CanBeUsedViaInterface()
         {
             // Arrange
-            var httpClient = new HttpClient { BaseAddress = new Uri("https://api.kulipa.com") };
             var mockVerifier = new Mock<IWebhookVerifier>();
             var mockCache = new Mock<IPublicKeyCache>();
-            var logger = new Mock<ILogger<WebhooksResource>>().Object;
 
             mockVerifier.Setup(x => x.VerifyWebhookAsync(
                     It.IsAny<IDictionary<string, string>>(),
@@ -45,7 +41,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 .ReturnsAsync(WebhookVerificationResult.Success());
 
             IWebhooksResource resource =
-                new WebhooksResource(httpClient, mockVerifier.Object, mockCache.Object, logger);
+                new WebhooksResource(mockVerifier.Object, mockCache.Object);
 
             // Act & Assert - Verify all interface methods are accessible
             Assert.IsNotNull(resource);
@@ -124,7 +120,11 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             var mockHttpClient = new HttpClient();
             var mockOptions = new Mock<IOptions<KulipaSdkOptions>>();
             var mockLogger = new Mock<ILogger<KulipaClient>>();
+            var mockUsers = new Mock<IUsersResource>();
+            var mockWallets = new Mock<IWalletsResource>();
+            var mockKycs = new Mock<IKycsResource>();
             var mockCards = new Mock<ICardsResource>();
+            var mockCardPayments = new Mock<ICardPaymentsResource>();
             var mockWebhooks = new Mock<IWebhooksResource>();
 
             mockOptions.Setup(x => x.Value)
@@ -139,7 +139,11 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 mockHttpClient,
                 mockOptions.Object,
                 mockLogger.Object,
+                mockUsers.Object,
+                mockWallets.Object,
+                mockKycs.Object,
                 mockCards.Object,
+                mockCardPayments.Object,
                 mockWebhooks.Object);
 
             // Act

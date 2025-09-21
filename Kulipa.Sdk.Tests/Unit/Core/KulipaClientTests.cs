@@ -13,11 +13,15 @@ namespace Kulipa.Sdk.Tests.Unit.Core
     [TestClass]
     public class KulipaClientTests
     {
+        private Mock<ICardPaymentsResource> _cardPaymentsResourceMock = null!;
         private Mock<ICardsResource> _cardsResourceMock = null!;
         private HttpClient _httpClient = null!;
         private Mock<HttpMessageHandler> _httpMessageHandlerMock = null!;
+        private Mock<IKycsResource> _kycsResourceMock = null!;
         private Mock<ILogger<KulipaClient>> _loggerMock = null!;
         private IOptions<KulipaSdkOptions> _options = null!;
+        private Mock<IUsersResource> _usersResourceMock = null!;
+        private Mock<IWalletsResource> _walletsResourceMock = null!;
         private Mock<IWebhooksResource> _webhooksResourceMock = null!;
 
         [TestInitialize]
@@ -25,7 +29,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
         {
             _httpMessageHandlerMock = new Mock<HttpMessageHandler>();
             _loggerMock = new Mock<ILogger<KulipaClient>>();
+            _usersResourceMock = new Mock<IUsersResource>();
+            _walletsResourceMock = new Mock<IWalletsResource>();
+            _kycsResourceMock = new Mock<IKycsResource>();
             _cardsResourceMock = new Mock<ICardsResource>();
+            _cardPaymentsResourceMock = new Mock<ICardPaymentsResource>();
             _webhooksResourceMock = new Mock<IWebhooksResource>();
             _options = Options.Create(new KulipaSdkOptions
             {
@@ -54,7 +62,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _httpClient,
                 _options,
                 _loggerMock.Object,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             // Assert
@@ -70,7 +82,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 null!,
                 _options,
                 _loggerMock.Object,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             action.Should()
@@ -86,7 +102,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _httpClient,
                 null!,
                 _loggerMock.Object,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             action.Should()
@@ -102,7 +122,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _httpClient,
                 _options,
                 null!,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             action.Should()
@@ -111,7 +135,7 @@ namespace Kulipa.Sdk.Tests.Unit.Core
         }
 
         [TestMethod]
-        public void Constructor_WithNullCardsResource_ThrowsArgumentNullException()
+        public void Constructor_WithNullUsersResource_ThrowsArgumentNullException()
         {
             // Act & Assert
             var action = () => new KulipaClient(
@@ -119,11 +143,15 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _options,
                 _loggerMock.Object,
                 null!,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
+                _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             action.Should()
                 .Throw<ArgumentNullException>()
-                .WithParameterName("cardsResource");
+                .WithParameterName("usersResource");
         }
 
         [TestMethod]
@@ -148,7 +176,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _httpClient,
                 _options,
                 _loggerMock.Object,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             // Act
@@ -185,7 +217,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _httpClient,
                 _options,
                 _loggerMock.Object,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             // Act
@@ -211,7 +247,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _httpClient,
                 _options,
                 _loggerMock.Object,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             // Act
@@ -237,7 +277,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _httpClient,
                 _options,
                 _loggerMock.Object,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             // Act
@@ -263,7 +307,11 @@ namespace Kulipa.Sdk.Tests.Unit.Core
                 _httpClient,
                 _options,
                 _loggerMock.Object,
+                _usersResourceMock.Object,
+                _walletsResourceMock.Object,
+                _kycsResourceMock.Object,
                 _cardsResourceMock.Object,
+                _cardPaymentsResourceMock.Object,
                 _webhooksResourceMock.Object);
 
             // Act

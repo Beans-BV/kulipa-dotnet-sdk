@@ -33,7 +33,7 @@ namespace Kulipa.Sdk.Tests.Integration
             // Configure options
             services.AddKulipaSdk(options =>
             {
-                options.ApiKey = "test-api-key";
+                options.ApiKey = "test-api-key"; // Need to replace with actual API key before running the tests
                 options.BaseUrl = "https://api.testing.kulipa.dev/v1/";
                 options.Environment = KulipaEnvironment.Sandbox;
                 options.WebhookTimestampTolerance = TimeSpan.FromMinutes(5);

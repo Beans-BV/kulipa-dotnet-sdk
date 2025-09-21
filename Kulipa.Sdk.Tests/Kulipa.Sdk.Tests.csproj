@@ -21,4 +21,8 @@
         <ProjectReference Include="..\Kulipa.Sdk\Kulipa.Sdk.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Integration\" />
+    </ItemGroup>
+
 </Project>

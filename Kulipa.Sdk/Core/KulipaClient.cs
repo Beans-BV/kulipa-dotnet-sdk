@@ -19,7 +19,11 @@ namespace Kulipa.Sdk.Core
             HttpClient httpClient,
             IOptions<KulipaSdkOptions> options,
             ILogger<KulipaClient> logger,
+            IUsersResource usersResource,
+            IWalletsResource walletsResource,
+            IKycsResource kycsResource,
             ICardsResource cardsResource,
+            ICardPaymentsResource cardPaymentsResource,
             IWebhooksResource webhooksResource
         )
         {
@@ -27,22 +31,22 @@ namespace Kulipa.Sdk.Core
             _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
+            Users = usersResource ?? throw new ArgumentNullException(nameof(usersResource));
+            Wallets = walletsResource ?? throw new ArgumentNullException(nameof(walletsResource));
+            Kycs = kycsResource ?? throw new ArgumentNullException(nameof(kycsResource));
             Cards = cardsResource ?? throw new ArgumentNullException(nameof(cardsResource));
-
-            // Initialize other resources when implemented
-            Users = null!; // TODO: Inject IUsersResource
-            Transactions = null!; // TODO: Inject ITransactionsResource
-            Wallets = null!; // TODO: Inject IWalletResource
+            CardPayments = cardPaymentsResource ?? throw new ArgumentNullException(nameof(cardPaymentsResource));
             Webhooks = webhooksResource ?? throw new ArgumentNullException(nameof(webhooksResource)); // Add this
-
 
             _logger.LogInformation("Kulipa SDK initialized for {Environment} environment", _options.Environment);
         }
 
+        public IKycsResource Kycs { get; }
+
         public IUsersResource Users { get; }
-        public ICardsResource Cards { get; }
-        public ITransactionsResource Transactions { get; }
         public IWalletsResource Wallets { get; }
+        public ICardsResource Cards { get; }
+        public ICardPaymentsResource CardPayments { get; }
         public IWebhooksResource Webhooks { get; }
 
         public async Task<bool> TestConnectionAsync(CancellationToken cancellationToken = default)

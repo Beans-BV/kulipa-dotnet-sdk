@@ -8,24 +8,18 @@ namespace Kulipa.Sdk.Resources
     /// </summary>
     public class WebhooksResource : IWebhooksResource
     {
-        private readonly HttpClient _httpClient;
         private readonly IPublicKeyCache _keyCache;
-        private readonly ILogger<WebhooksResource> _logger;
         private readonly IWebhookVerifier _verifier;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="WebhooksResource" /> class.
         /// </summary>
         public WebhooksResource(
-            HttpClient httpClient,
             IWebhookVerifier verifier,
-            IPublicKeyCache keyCache,
-            ILogger<WebhooksResource> logger)
+            IPublicKeyCache keyCache)
         {
-            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _verifier = verifier ?? throw new ArgumentNullException(nameof(verifier));
             _keyCache = keyCache ?? throw new ArgumentNullException(nameof(keyCache));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -92,27 +86,6 @@ namespace Kulipa.Sdk.Resources
         public void ClearKeyCache()
         {
             _keyCache.Clear();
-        }
-    }
-
-    /// <summary>
-    ///     Null logger implementation for when no logger is provided.
-    /// </summary>
-    internal class NullLogger<T> : ILogger<T>
-    {
-        public IDisposable? BeginScope<TState>(TState state) where TState : notnull
-        {
-            return null;
-        }
-
-        public bool IsEnabled(LogLevel logLevel)
-        {
-            return false;
-        }
-
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,
-            Func<TState, Exception?, string> formatter)
-        {
         }
     }
 }

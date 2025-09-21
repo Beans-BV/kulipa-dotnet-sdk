@@ -3,6 +3,9 @@ using Kulipa.Sdk.Models.Wallets;
 
 namespace Kulipa.Sdk.Resources
 {
+    /// <summary>
+    ///     Interface for wallets.
+    /// </summary>
     public interface IWalletsResource
     {
         /// <summary>

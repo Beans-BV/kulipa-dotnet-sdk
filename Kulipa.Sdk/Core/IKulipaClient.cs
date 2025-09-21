@@ -18,9 +18,9 @@ namespace Kulipa.Sdk.Core
         ICardsResource Cards { get; }
 
         /// <summary>
-        ///     Gets the Transactions resource for managing transactions.
+        ///     Gets the Card payments resource for managing card payment transactions.
         /// </summary>
-        ITransactionsResource Transactions { get; }
+        ICardPaymentsResource CardPayments { get; }
 
         /// <summary>
         ///     Gets the webhooks resource for webhook operations.

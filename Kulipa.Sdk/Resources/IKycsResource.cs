@@ -1,6 +1,6 @@
 namespace Kulipa.Sdk.Resources
 {
-    public class ITransactionsResource
+    public class IKycsResource
     {
     }
 }
