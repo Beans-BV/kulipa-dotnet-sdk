@@ -56,7 +56,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 Id = "wlt-987f6543-e21b-43d2-b123-426614174111",
                 UserId = request.UserId,
                 Name = request.Name,
-                Address = request.Address, // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
+                Address = request
+                    .Address, // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
                 Status = WalletStatus.Unverified,
                 Blockchain = request.Blockchain,
                 CreatedAt = DateTime.UtcNow,
@@ -89,7 +90,9 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             result.UserId.Should().Be(expectedWallet.UserId);
             result.Name.Should().Be(expectedWallet.Name);
             result.Blockchain.Should().Be(expectedWallet.Blockchain);
-            result.Address.Should().Be(expectedWallet.Address); // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
+            result.Address.Should()
+                .Be(expectedWallet
+                    .Address); // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
             result.Status.Should().Be(expectedWallet.Status);
         }
 

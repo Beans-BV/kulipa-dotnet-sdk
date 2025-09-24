@@ -97,7 +97,9 @@ namespace Kulipa.Sdk.Tests.Unit.Services
                     lock (lockObject)
                     {
                         if (currentConcurrency > maxConcurrency)
+                        {
                             maxConcurrency = currentConcurrency;
+                        }
                     }
 
                     // Simulate concurrent request execution (this should happen in parallel)

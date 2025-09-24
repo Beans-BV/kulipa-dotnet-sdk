@@ -9,6 +9,7 @@ namespace Kulipa.Sdk.Resources
     /// </summary>
     public class WalletsResource : BaseResource, IWalletsResource
     {
+        /// <inheritdoc />
         public WalletsResource(HttpClient httpClient) : base(httpClient)
         {
         }

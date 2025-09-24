@@ -8,6 +8,7 @@ namespace Kulipa.Sdk.Resources
     /// </summary>
     public class UsersResource : BaseResource, IUsersResource
     {
+        /// <inheritdoc />
         public UsersResource(HttpClient httpClient) : base(httpClient)
         {
         }

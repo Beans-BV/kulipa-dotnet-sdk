@@ -8,6 +8,7 @@ namespace Kulipa.Sdk.Resources
     /// </summary>
     public class CardsResource : BaseResource, ICardsResource
     {
+        /// <inheritdoc />
         public CardsResource(HttpClient httpClient) : base(httpClient)
         {
         }

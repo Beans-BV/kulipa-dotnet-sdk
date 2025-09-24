@@ -1,11 +1,12 @@
 using System.Net;
 using Kulipa.Sdk.Exceptions;
-using Microsoft.Extensions.Logging;
 
 namespace Kulipa.Sdk.Services.Http
 {
     /// <summary>
-    ///     Handles rate limiting for API requests.
+    ///     HTTP message handler that manages rate limiting for Kulipa API requests.
+    ///     Tracks remaining requests and reset times, automatically waits when limits are exceeded,
+    ///     and throws <see cref="KulipaRateLimitException" /> on 429 responses.
     /// </summary>
     public class RateLimitHandler : DelegatingHandler
     {
@@ -14,11 +15,22 @@ namespace Kulipa.Sdk.Services.Http
         private int _remainingRequests = 300;
         private DateTime _resetTime = DateTime.UtcNow.AddMinutes(1);
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="RateLimitHandler" /> class.
+        /// </summary>
+        /// <param name="logger">The logger instance for rate limit events.</param>
         public RateLimitHandler(ILogger<RateLimitHandler> logger)
         {
             _logger = logger;
         }
 
+        /// <summary>
+        ///     Sends an HTTP request asynchronously with rate limit management.
+        /// </summary>
+        /// <param name="request">The HTTP request message to send.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>The HTTP response message.</returns>
+        /// <exception cref="KulipaRateLimitException">Thrown when the API returns a 429 Too Many Requests status.</exception>
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             CancellationToken cancellationToken)
@@ -69,6 +81,10 @@ namespace Kulipa.Sdk.Services.Http
             return response;
         }
 
+        /// <summary>
+        ///     Updates internal rate limit state based on response headers.
+        /// </summary>
+        /// <param name="response">The HTTP response containing rate limit headers.</param>
         private void UpdateRateLimitInfo(HttpResponseMessage response)
         {
             int currentRemaining;
@@ -107,7 +123,12 @@ namespace Kulipa.Sdk.Services.Http
             }
         }
 
-        private int GetRetryAfterSeconds(HttpResponseMessage response)
+        /// <summary>
+        ///     Extracts the retry-after duration from response headers.
+        /// </summary>
+        /// <param name="response">The HTTP response containing the Retry-After header.</param>
+        /// <returns>The number of seconds to wait before retrying, defaults to 60 if header is missing or invalid.</returns>
+        private static int GetRetryAfterSeconds(HttpResponseMessage response)
         {
             if (response.Headers.TryGetValues("Retry-After", out var retryAfter))
             {

@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Kulipa.Sdk.Configuration
 {
     /// <summary>
@@ -10,13 +8,11 @@ namespace Kulipa.Sdk.Configuration
         /// <summary>
         ///     Gets or sets the API key for authentication.
         /// </summary>
-        [Required(ErrorMessage = "API Key is required")]
         public string ApiKey { get; set; } = string.Empty;
 
         /// <summary>
         ///     Gets or sets the base URL for the Kulipa API.
         /// </summary>
-        [Required(ErrorMessage = "Base URL is required")]
         public string BaseUrl { get; set; } = string.Empty;
 
         /// <summary>

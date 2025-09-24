@@ -11,11 +11,21 @@ namespace Kulipa.Sdk.Services.Http
         private const string IdempotencyKeyHeader = "x-idempotency-key";
         private readonly KulipaSdkOptions _options;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="IdempotencyHandler"/> class.
+        /// </summary>
+        /// <param name="options">The SDK configuration options containing idempotency settings.</param>
         public IdempotencyHandler(IOptions<KulipaSdkOptions> options)
         {
             _options = options.Value;
         }
 
+        /// <summary>
+        ///     Sends an HTTP request with idempotency key header added for POST and PUT requests.
+        /// </summary>
+        /// <param name="request">The HTTP request message.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>The HTTP response message.</returns>
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             CancellationToken cancellationToken)
@@ -44,6 +54,11 @@ namespace Kulipa.Sdk.Services.Http
             return await base.SendAsync(request, cancellationToken);
         }
 
+        /// <summary>
+        ///     Generates a unique idempotency key based on the HTTP request method, URL, and timestamp.
+        /// </summary>
+        /// <param name="request">The HTTP request message.</param>
+        /// <returns>A unique idempotency key string.</returns>
         private string GenerateIdempotencyKey(HttpRequestMessage request)
         {
             // Generate a unique key based on method, URL, and timestamp

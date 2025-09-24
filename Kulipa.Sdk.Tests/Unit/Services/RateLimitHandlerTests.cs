@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net;
 using FluentAssertions;
 using Kulipa.Sdk.Exceptions;
@@ -226,7 +227,7 @@ namespace Kulipa.Sdk.Tests.Unit.Services
             var tasks = Enumerable.Range(0, 50)
                 .Select(i => _httpClient.GetAsync($"https://api.kulipa.com/test{i}"));
 
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            var stopwatch = Stopwatch.StartNew();
             var responses = await Task.WhenAll(tasks);
             stopwatch.Stop();
 
@@ -236,13 +237,15 @@ namespace Kulipa.Sdk.Tests.Unit.Services
             requestCount.Should().Be(50);
 
             // Verify requests ran in parallel (total time should be close to individual request time, not sum)
-            stopwatch.ElapsedMilliseconds.Should().BeLessThan(200,
-                "Concurrent requests should complete faster than sequential execution");
+            stopwatch.ElapsedMilliseconds.Should()
+                .BeLessThan(200,
+                    "Concurrent requests should complete faster than sequential execution");
 
             // Verify requests started within a reasonable time window (indicating parallelism)
             var timeSpan = concurrentRequests.Max() - concurrentRequests.Min();
-            timeSpan.Should().BeLessThan(TimeSpan.FromMilliseconds(100),
-                "All requests should start nearly simultaneously");
+            timeSpan.Should()
+                .BeLessThan(TimeSpan.FromMilliseconds(100),
+                    "All requests should start nearly simultaneously");
         }
     }
 }

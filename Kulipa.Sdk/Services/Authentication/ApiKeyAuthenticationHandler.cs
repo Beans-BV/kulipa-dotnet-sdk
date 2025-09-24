@@ -11,11 +11,21 @@ namespace Kulipa.Sdk.Services.Authentication
         private const string ApiKeyHeader = "x-api-key";
         private readonly KulipaSdkOptions _options;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ApiKeyAuthenticationHandler"/> class.
+        /// </summary>
+        /// <param name="options">The SDK configuration options containing the API key.</param>
         public ApiKeyAuthenticationHandler(IOptions<KulipaSdkOptions> options)
         {
             _options = options.Value;
         }
 
+        /// <summary>
+        ///     Sends an HTTP request with API key authentication header added.
+        /// </summary>
+        /// <param name="request">The HTTP request message.</param>
+        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
+        /// <returns>The HTTP response message.</returns>
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             CancellationToken cancellationToken)

@@ -1,5 +1,8 @@
 namespace Kulipa.Sdk.Configuration
 {
+    /// <summary>
+    ///     Configuration options for retry policy behavior.
+    /// </summary>
     public class RetryPolicyOptions
     {
         /// <summary>

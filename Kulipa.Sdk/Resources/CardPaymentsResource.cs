@@ -9,6 +9,7 @@ namespace Kulipa.Sdk.Resources
     /// </summary>
     public class CardPaymentsResource : BaseResource, ICardPaymentsResource
     {
+        /// <inheritdoc />
         public CardPaymentsResource(HttpClient httpClient) : base(httpClient)
         {
         }

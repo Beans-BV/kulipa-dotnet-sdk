@@ -15,6 +15,18 @@ namespace Kulipa.Sdk.Core
         private bool _disposed;
 
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="KulipaClient" /> class.
+        /// </summary>
+        /// <param name="httpClient">The HTTP client for making API requests.</param>
+        /// <param name="options">The SDK configuration options.</param>
+        /// <param name="logger">The logger instance.</param>
+        /// <param name="usersResource">The users resource implementation.</param>
+        /// <param name="walletsResource">The wallets resource implementation.</param>
+        /// <param name="kycsResource">The KYCs resource implementation.</param>
+        /// <param name="cardsResource">The cards resource implementation.</param>
+        /// <param name="cardPaymentsResource">The card payments resource implementation.</param>
+        /// <param name="webhooksResource">The webhooks resource implementation.</param>
         public KulipaClient(
             HttpClient httpClient,
             IOptions<KulipaSdkOptions> options,
@@ -41,14 +53,25 @@ namespace Kulipa.Sdk.Core
             _logger.LogInformation("Kulipa SDK initialized for {Environment} environment", _options.Environment);
         }
 
+        /// <inheritdoc />
         public IKycsResource Kycs { get; }
 
+        /// <inheritdoc />
         public IUsersResource Users { get; }
+
+        /// <inheritdoc />
         public IWalletsResource Wallets { get; }
+
+        /// <inheritdoc />
         public ICardsResource Cards { get; }
+
+        /// <inheritdoc />
         public ICardPaymentsResource CardPayments { get; }
+
+        /// <inheritdoc />
         public IWebhooksResource Webhooks { get; }
 
+        /// <inheritdoc />
         public async Task<bool> TestConnectionAsync(CancellationToken cancellationToken = default)
         {
             try
@@ -71,6 +94,7 @@ namespace Kulipa.Sdk.Core
             }
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             Dispose(true);

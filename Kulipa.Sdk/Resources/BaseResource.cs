@@ -14,13 +14,18 @@ namespace Kulipa.Sdk.Resources
     /// </summary>
     public abstract class BaseResource
     {
-        protected readonly HttpClient HttpClient;
-        protected readonly JsonSerializerOptions JsonOptions;
+        private readonly HttpClient _httpClient;
+        private readonly JsonSerializerOptions _jsonOptions;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BaseResource" /> class.
+        /// </summary>
+        /// <param name="httpClient">The HTTP client for making API requests.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="httpClient" /> is null.</exception>
         protected BaseResource(HttpClient httpClient)
         {
-            HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-            JsonOptions = new JsonSerializerOptions
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _jsonOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 PropertyNameCaseInsensitive = true
@@ -44,7 +49,7 @@ namespace Kulipa.Sdk.Resources
         {
             ValidateId(id, idParameterName);
 
-            var response = await HttpClient.GetAsync(resourcePath, cancellationToken);
+            var response = await _httpClient.GetAsync(resourcePath, cancellationToken);
             await EnsureSuccessStatusCode(response);
 
             return await DeserializeResponse<T>(response, cancellationToken);
@@ -70,12 +75,12 @@ namespace Kulipa.Sdk.Resources
 
             var httpRequest = new HttpRequestMessage(HttpMethod.Post, resourcePath)
             {
-                Content = JsonContent.Create(request, options: JsonOptions)
+                Content = JsonContent.Create(request, options: _jsonOptions)
             };
 
             AddIdempotencyKey(httpRequest, idempotencyKey);
 
-            var response = await HttpClient.SendAsync(httpRequest, cancellationToken);
+            var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
             await EnsureSuccessStatusCode(response);
 
             return await DeserializeResponse<TResponse>(response, cancellationToken);
@@ -101,12 +106,12 @@ namespace Kulipa.Sdk.Resources
 
             if (request != null)
             {
-                httpRequest.Content = JsonContent.Create(request, options: JsonOptions);
+                httpRequest.Content = JsonContent.Create(request, options: _jsonOptions);
             }
 
             AddIdempotencyKey(httpRequest, idempotencyKey);
 
-            var response = await HttpClient.SendAsync(httpRequest, cancellationToken);
+            var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
             await EnsureSuccessStatusCode(response);
 
             return await DeserializeResponse<TResponse>(response, cancellationToken);
@@ -169,7 +174,7 @@ namespace Kulipa.Sdk.Resources
             var queryString = query.ToString();
             var url = string.IsNullOrEmpty(queryString) ? resourcePath : $"{resourcePath}?{queryString}";
 
-            var response = await HttpClient.GetAsync(url, cancellationToken);
+            var response = await _httpClient.GetAsync(url, cancellationToken);
             await EnsureSuccessStatusCode(response);
 
             return await DeserializeResponse<PagedResponse<T>>(response, cancellationToken);
@@ -207,7 +212,7 @@ namespace Kulipa.Sdk.Resources
             var queryString = query.ToString();
             var url = string.IsNullOrEmpty(queryString) ? resourcePath : $"{resourcePath}?{queryString}";
 
-            var response = await HttpClient.GetAsync(url, cancellationToken);
+            var response = await _httpClient.GetAsync(url, cancellationToken);
             await EnsureSuccessStatusCode(response);
 
             return await DeserializeResponse<PagedResponse<T>>(response, cancellationToken);
@@ -262,7 +267,7 @@ namespace Kulipa.Sdk.Resources
         /// <exception cref="KulipaException">Thrown when deserialization fails.</exception>
         private async Task<T> DeserializeResponse<T>(HttpResponseMessage response, CancellationToken cancellationToken)
         {
-            var entity = await response.Content.ReadFromJsonAsync<T>(JsonOptions, cancellationToken);
+            var entity = await response.Content.ReadFromJsonAsync<T>(_jsonOptions, cancellationToken);
 
             if (entity == null)
             {
