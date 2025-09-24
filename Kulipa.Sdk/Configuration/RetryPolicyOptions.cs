@@ -1,17 +1,20 @@
-public class RetryPolicyOptions
+namespace Kulipa.Sdk.Configuration
 {
-    /// <summary>
-    ///     Maximum number of retry attempts.
-    /// </summary>
-    public int MaxRetryAttempts { get; set; } = 3;
+    public class RetryPolicyOptions
+    {
+        /// <summary>
+        ///     Maximum number of retry attempts.
+        /// </summary>
+        public int MaxRetryAttempts { get; set; } = 3;
 
-    /// <summary>
-    ///     Base delay between retries in seconds.
-    /// </summary>
-    public int BaseDelaySeconds { get; set; } = 2;
+        /// <summary>
+        ///     Base delay between retries in seconds.
+        /// </summary>
+        public int BaseDelaySeconds { get; set; } = 2;
 
-    /// <summary>
-    ///     Whether to use exponential backoff.
-    /// </summary>
-    public bool UseExponentialBackoff { get; set; } = true;
+        /// <summary>
+        ///     Whether to use exponential backoff.
+        /// </summary>
+        public bool UseExponentialBackoff { get; set; } = true;
+    }
 }

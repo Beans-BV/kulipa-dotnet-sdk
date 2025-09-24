@@ -57,22 +57,4 @@ namespace Kulipa.Sdk.Models.Cards
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public DeliveryType? DeliveryType { get; set; }
     }
-
-    public class ReissueFromCard
-    {
-        /// <summary>
-        ///     Card identifier. Begins with 'crd-' followed by a v4 UUID.
-        /// </summary>
-        [Required]
-        [JsonPropertyName("id")]
-        public string Id { get; set; } = string.Empty;
-
-        /// <summary>
-        ///     Reason for reissue.
-        /// </summary>
-        [Required]
-        [JsonPropertyName("reason")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public ReissueReason Reason { get; set; }
-    }
 }

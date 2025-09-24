@@ -33,13 +33,15 @@ namespace Kulipa.Sdk.Models.Wallets
         public WithdrawalStatus Status { get; set; }
 
         /// <summary>
-        ///     Token identifier for the withdrawal. Represents the cryptocurrency or token being withdrawn. TODO
+        ///     Token identifier for the withdrawal. Represents the cryptocurrency or token being withdrawn.
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("tokenId")]
         public string TokenId { get; set; }
 
         /// <summary>
-        ///     Smart contract address of the token being withdrawn. TODO
+        ///     Smart contract address of the token being withdrawn.
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("contractAddress")]
         public string ContractAddress { get; set; }
@@ -73,36 +75,5 @@ namespace Kulipa.Sdk.Models.Wallets
         /// </summary>
         [JsonPropertyName("confirmedAt")]
         public DateTime? ConfirmedAt { get; set; }
-    }
-
-    /// <summary>
-    ///     Possible statuses of a withdrawal transaction.
-    /// </summary>
-    public enum WithdrawalStatus
-    {
-        /// <summary>
-        ///     Withdrawal is in draft state.
-        /// </summary>
-        Draft,
-
-        /// <summary>
-        ///     Withdrawal is pending confirmation.
-        /// </summary>
-        Pending,
-
-        /// <summary>
-        ///     Withdrawal has been confirmed and processed.
-        /// </summary>
-        Confirmed,
-
-        /// <summary>
-        ///     Withdrawal has been rejected.
-        /// </summary>
-        Rejected,
-
-        /// <summary>
-        ///     Withdrawal has failed to process.
-        /// </summary>
-        Failed
     }
 }

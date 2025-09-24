@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Kulipa.Sdk.Models.Common;
 
 namespace Kulipa.Sdk.Models.Wallets
 {
@@ -32,7 +33,7 @@ namespace Kulipa.Sdk.Models.Wallets
         public TopUpStatus Status { get; set; }
 
         /// <summary>
-        ///     TODO
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("contractAddress")]
         public string ContractAddress { get; set; }
@@ -44,7 +45,7 @@ namespace Kulipa.Sdk.Models.Wallets
         public BlockchainNetwork Blockchain { get; set; }
 
         /// <summary>
-        ///     TODO
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("transactionHash")]
         public string TransactionHash { get; set; }
@@ -72,14 +73,5 @@ namespace Kulipa.Sdk.Models.Wallets
         /// </summary>
         [JsonPropertyName("updatedAt")]
         public DateTime UpdatedAt { get; set; }
-    }
-
-    /// <summary>
-    ///     Possible statuses of a top-up.
-    /// </summary>
-    public enum TopUpStatus
-    {
-        [JsonPropertyName("confirmed")] Confirmed,
-        [JsonPropertyName("failed")] Failed
     }
 }

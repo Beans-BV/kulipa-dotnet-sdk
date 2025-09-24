@@ -16,7 +16,8 @@ namespace Kulipa.Sdk.Configuration
         /// <summary>
         ///     Gets or sets the base URL for the Kulipa API.
         /// </summary>
-        public string BaseUrl { get; set; } = "https://api.kulipa.com";
+        [Required(ErrorMessage = "Base URL is required")]
+        public string BaseUrl { get; set; } = string.Empty;
 
         /// <summary>
         ///     Gets or sets the environment (Sandbox/Production).
@@ -69,29 +70,5 @@ namespace Kulipa.Sdk.Configuration
         ///     Default is 1 hour.
         /// </summary>
         public TimeSpan WebhookKeyCacheExpiration { get; set; } = TimeSpan.FromHours(1);
-    }
-
-    public class RetryPolicyOptions
-    {
-        /// <summary>
-        ///     Maximum number of retry attempts.
-        /// </summary>
-        public int MaxRetryAttempts { get; set; } = 3;
-
-        /// <summary>
-        ///     Base delay between retries in seconds.
-        /// </summary>
-        public int BaseDelaySeconds { get; set; } = 2;
-
-        /// <summary>
-        ///     Whether to use exponential backoff.
-        /// </summary>
-        public bool UseExponentialBackoff { get; set; } = true;
-    }
-
-    public enum KulipaEnvironment
-    {
-        Sandbox,
-        Production
     }
 }

@@ -1,6 +1,6 @@
 namespace Kulipa.Sdk.Resources
 {
-    public class KycsResource
+    public class KycsResource : IKycsResource
     {
     }
 }

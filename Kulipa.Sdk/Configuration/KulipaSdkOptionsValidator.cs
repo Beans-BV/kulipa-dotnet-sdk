@@ -20,18 +20,6 @@ namespace Kulipa.Sdk.Configuration
                 return ValidateOptionsResult.Fail("Options cannot be null");
             }
 
-            // Validate API Key
-            if (string.IsNullOrWhiteSpace(options.ApiKey))
-            {
-                return ValidateOptionsResult.Fail("ApiKey is required");
-            }
-
-            // Validate Base URL
-            if (string.IsNullOrWhiteSpace(options.BaseUrl))
-            {
-                return ValidateOptionsResult.Fail("BaseUrl is required");
-            }
-
             if (!Uri.TryCreate(options.BaseUrl, UriKind.Absolute, out var uri) ||
                 (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
             {

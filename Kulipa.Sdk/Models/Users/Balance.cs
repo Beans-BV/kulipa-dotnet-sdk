@@ -9,12 +9,14 @@ namespace Kulipa.Sdk.Models.Users
     {
         /// <summary>
         ///     Onchain balance minus card pending holds, pending transfer and erc20 allowances.
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("accountUsableBalance")]
         public required decimal AccountUsableBalance { get; set; }
 
         /// <summary>
         ///     User pending balance in currency (card pending holds, pending transfer and erc20 allowances).
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("reservedBalance")]
         public required decimal ReservedBalance { get; set; }
@@ -53,14 +55,16 @@ namespace Kulipa.Sdk.Models.Users
         public required decimal PendingCardTransactions { get; set; }
 
         /// <summary>
-        ///     Pending transfer and erc20 allowances. TODO
+        ///     Pending transfer and erc20 allowances.
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("pendingWalletTransactions")]
         public required decimal PendingWalletTransactions { get; set; }
 
         /// <summary>
-        ///     User balance currency code with decimal precision. TODO
+        ///     User balance currency code with decimal precision.
         ///     Currently, there is only one supported currency, "USD6D" which means USD with 6 decimal numbers precision (int).
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("currency")]
         public required string Currency { get; set; }

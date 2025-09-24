@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Kulipa.Sdk.Models.Common;
 
 namespace Kulipa.Sdk.Models.Wallets
 {
@@ -33,7 +34,7 @@ namespace Kulipa.Sdk.Models.Wallets
         public WalletStatus Status { get; set; }
 
         /// <summary>
-        ///     TODO
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }
@@ -52,7 +53,8 @@ namespace Kulipa.Sdk.Models.Wallets
         public DateTime VerifiedAt { get; set; }
 
         /// <summary>
-        ///     Kulipa public key created for the wallet. TODO
+        ///     Kulipa public key created for the wallet.
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("publicKey")]
         public string PublicKey { get; set; }
@@ -68,42 +70,5 @@ namespace Kulipa.Sdk.Models.Wallets
         /// </summary>
         [JsonPropertyName("updatedAt")]
         public DateTime UpdatedAt { get; set; }
-    }
-
-    /// <summary>
-    ///     Supported blockchain networks.
-    /// </summary>
-    public enum BlockchainNetwork
-    {
-        /// <summary>
-        ///     Stellar testnet network.
-        /// </summary>
-        StellarTestnet,
-
-        /// <summary>
-        ///     Stellar mainnet network.
-        /// </summary>
-        StellarMainnet
-    }
-
-    /// <summary>
-    ///     Possible statuses of a wallet.
-    /// </summary>
-    public enum WalletStatus
-    {
-        /// <summary>
-        ///     Wallet is unverified and cannot be used.
-        /// </summary>
-        Unverified,
-
-        /// <summary>
-        ///     Wallet is active and can be used for transactions.
-        /// </summary>
-        Active,
-
-        /// <summary>
-        ///     Wallet is frozen and temporarily disabled.
-        /// </summary>
-        Frozen
     }
 }

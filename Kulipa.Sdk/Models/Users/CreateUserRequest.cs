@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Kulipa.Sdk.Models.Wallets;
 
 namespace Kulipa.Sdk.Models.Users
 {
@@ -32,7 +31,7 @@ namespace Kulipa.Sdk.Models.Users
         /// </summary>
         [Required]
         [JsonPropertyName("wallet")]
-        public required Wallet Wallet { get; set; }
+        public required UserWallet UserWallet { get; set; }
 
         /// <summary>
         ///     Legitimate email ID of the card user. This entry should be distinct among all users.
@@ -84,24 +83,5 @@ namespace Kulipa.Sdk.Models.Users
         /// </summary>
         [JsonPropertyName("companyId")]
         public string? CompanyId { get; set; }
-    }
-
-    public class Wallet
-    {
-        /// <summary>
-        ///     A blockchain on which a wallet is deployed.
-        /// </summary>
-        [Required]
-        [JsonPropertyName("blockchain")]
-        public required BlockchainNetwork Blockchain { get; set; } = BlockchainNetwork.StellarTestnet;
-
-        /// <summary>
-        ///     User's withdrawal wallet address on the blockchain network.
-        ///     This address is used to withdraw funds from the user's
-        ///     Kulipa prepaid account.
-        /// </summary>
-        [Required]
-        [JsonPropertyName("withdrawalAddress")]
-        public required string WithdrawalAddress { get; set; }
     }
 }

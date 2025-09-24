@@ -100,9 +100,12 @@ namespace Kulipa.Sdk.Extensions
 
             services.AddScoped<ICardsResource, CardsResource>();
             services.AddScoped<IWebhooksResource, WebhooksResource>();
-            // Add other resources as they're implemented
-            // services.AddScoped<IUsersResource, UsersResource>();
-            // services.AddScoped<ITransactionsResource, TransactionsResource>();
+            services.AddScoped<IUsersResource, UsersResource>();
+            services.AddScoped<IKycsResource, KycsResource>();
+            services.AddScoped<IWalletsResource, WalletsResource>();
+            services.AddScoped<ICardPaymentsResource, CardPaymentsResource>();
+            services.AddScoped<IUsersResource, UsersResource>();
+            services.AddScoped<IKycsResource, KycsResource>();
 
             return services;
         }

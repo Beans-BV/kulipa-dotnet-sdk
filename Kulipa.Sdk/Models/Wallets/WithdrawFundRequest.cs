@@ -3,10 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace Kulipa.Sdk.Models.Wallets
 {
+    /// <summary>
+    ///     Represents a request to withdraw funds from a wallet.
+    /// </summary>
     public class WithdrawFundRequest
     {
         /// <summary>
-        ///     TODO
+        ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [Required]
         [JsonPropertyName("tokenId")]

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Kulipa.Sdk.Models.Common;
 
 namespace Kulipa.Sdk.Models.Wallets
 {

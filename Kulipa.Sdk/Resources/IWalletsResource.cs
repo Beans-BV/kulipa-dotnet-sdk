@@ -57,7 +57,7 @@ namespace Kulipa.Sdk.Resources
         /// <summary>
         ///     A PUT request sent to verify a non-custodial wallet.
         ///     <param name="walletId">The UUID of the wallet.</param>
-        ///     <param name="typedData">TODO.</param>
+        ///     <param name="typedData">TODO: Update this when Kulipa updates their docs after adding support for Stellar.</param>
         ///     <param name="idempotencyKey">Optional idempotency key for the request.</param>
         ///     <param name="cancellationToken">Cancellation token.</param>
         /// </summary>
