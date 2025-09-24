@@ -1,27 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
-
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>12</LangVersion>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-
         <PackageId>Kulipa.Sdk</PackageId>
-        <Version>0.1.0</Version>
+        <Version>1.0.0</Version>
         <Authors>Beans B.V.</Authors>
-        <Company>Kulipa</Company>
+        <Company>Beans-BV</Company>
         <Product>Kulipa SDK for .NET</Product>
+        <EnablePackageValidation>true</EnablePackageValidation>
         <Description>.NET SDK for the Kulipa API - Manage users, cards, transactions, and wallet operations</Description>
         <PackageTags>kulipa;api;sdk;payment;cards;wallet;transactions</PackageTags>
+        <Copyright>Copyright © 2025 Beans-BV</Copyright>
         <PackageProjectUrl>https://github.com/Beans-BV/kulipa-dotnet-sdk</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Beans-BV/kulipa-dotnet-sdk</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <ReleaseNotes>https://github.com/Beans-BV/kulipa-dotnet-sdk/releases</ReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>icon.png</PackageIcon>
         <OutputType>Library</OutputType>
     </PropertyGroup>
-
+    <PropertyGroup>
+        <PackageReadmeFile>Nuget-README.md</PackageReadmeFile>
+    </PropertyGroup>
     <ItemGroup>
         <Folder Include="Models\Kyc\"/>
         <Folder Include="Services\Serialization\"/>

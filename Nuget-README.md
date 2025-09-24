@@ -1,0 +1,1 @@
+.NET SDK for the Kulipa API - Manage users, cards, transactions, and wallet operations.
