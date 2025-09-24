@@ -1,5 +1,6 @@
 using System.Net;
 using Kulipa.Sdk.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace Kulipa.Sdk.Services.Http
 {
@@ -10,24 +11,46 @@ namespace Kulipa.Sdk.Services.Http
     {
         private readonly object _lockObject = new();
         private readonly ILogger<RateLimitHandler> _logger;
-        private readonly SemaphoreSlim _semaphore;
         private int _remainingRequests = 300;
         private DateTime _resetTime = DateTime.UtcNow.AddMinutes(1);
 
         public RateLimitHandler(ILogger<RateLimitHandler> logger)
         {
             _logger = logger;
-            _semaphore = new SemaphoreSlim(1, 1);
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            await _semaphore.WaitAsync(cancellationToken);
-            try
+            // Check rate limit (fast, non-blocking)
+            bool shouldWait;
+            DateTime waitUntil;
+            lock (_lockObject)
             {
-                // Check if we should wait before making the request with thread-safe reads
+                shouldWait = _remainingRequests <= 0 && DateTime.UtcNow < _resetTime;
+                waitUntil = _resetTime;
+            }
+
+            if (shouldWait)
+            {
+                var waitTime = waitUntil - DateTime.UtcNow;
+                _logger.LogWarning("Rate limit reached. Waiting {WaitTime} seconds", waitTime.TotalSeconds);
+                await Task.Delay(waitTime, cancellationToken);
+            }
+
+            // Execute request concurrently
+            var response = await base.SendAsync(request, cancellationToken);
+
+            // Update state (protected by lock, but non-blocking)
+            UpdateRateLimitInfo(response);
+
+            // Handle 429 responses
+            if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            {
+                var retryAfter = GetRetryAfterSeconds(response);
+
+                // Get current values safely for exception
                 int currentRemaining;
                 DateTime currentResetTime;
                 lock (_lockObject)
@@ -36,43 +59,14 @@ namespace Kulipa.Sdk.Services.Http
                     currentResetTime = _resetTime;
                 }
 
-                if (currentRemaining <= 0 && DateTime.UtcNow < currentResetTime)
-                {
-                    var waitTime = currentResetTime - DateTime.UtcNow;
-                    _logger.LogWarning("Rate limit reached. Waiting {WaitTime} seconds", waitTime.TotalSeconds);
-                    await Task.Delay(waitTime, cancellationToken);
-                }
-
-                var response = await base.SendAsync(request, cancellationToken);
-
-                // Update rate limit information from headers
-                UpdateRateLimitInfo(response);
-
-                // Handle 429 responses
-                if (response.StatusCode == HttpStatusCode.TooManyRequests)
-                {
-                    var retryAfter = GetRetryAfterSeconds(response);
-
-                    // Get current values safely for exception
-                    lock (_lockObject)
-                    {
-                        currentRemaining = _remainingRequests;
-                        currentResetTime = _resetTime;
-                    }
-
-                    throw new KulipaRateLimitException(
-                        "Rate limit exceeded",
-                        currentRemaining,
-                        currentResetTime,
-                        retryAfter);
-                }
-
-                return response;
+                throw new KulipaRateLimitException(
+                    "Rate limit exceeded",
+                    currentRemaining,
+                    currentResetTime,
+                    retryAfter);
             }
-            finally
-            {
-                _semaphore.Release();
-            }
+
+            return response;
         }
 
         private void UpdateRateLimitInfo(HttpResponseMessage response)

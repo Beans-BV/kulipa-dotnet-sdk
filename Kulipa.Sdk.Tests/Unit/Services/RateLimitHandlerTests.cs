@@ -185,5 +185,64 @@ namespace Kulipa.Sdk.Tests.Unit.Services
                     It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
                 Times.AtLeastOnce);
         }
+
+        [TestMethod]
+        public async Task SendAsync_ConcurrentRequests_ExecuteInParallel()
+        {
+            // Arrange
+            var requestCount = 0;
+            var concurrentRequests = new List<DateTime>();
+            var lockObject = new object();
+
+            _innerHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(async () =>
+                {
+                    lock (lockObject)
+                    {
+                        concurrentRequests.Add(DateTime.UtcNow);
+                        requestCount++;
+                    }
+
+                    // Simulate some processing time
+                    await Task.Delay(50);
+
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Headers.Add("x-ratelimit-remaining", "250");
+                    return response;
+                });
+
+            _handler = new RateLimitHandler(_loggerMock.Object)
+            {
+                InnerHandler = _innerHandlerMock.Object
+            };
+            _httpClient = new HttpClient(_handler);
+
+            // Act - Execute multiple requests concurrently
+            var tasks = Enumerable.Range(0, 50)
+                .Select(i => _httpClient.GetAsync($"https://api.kulipa.com/test{i}"));
+
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            var responses = await Task.WhenAll(tasks);
+            stopwatch.Stop();
+
+            // Assert
+            responses.Should().HaveCount(50);
+            responses.Should().AllSatisfy(r => r.StatusCode.Should().Be(HttpStatusCode.OK));
+            requestCount.Should().Be(50);
+
+            // Verify requests ran in parallel (total time should be close to individual request time, not sum)
+            stopwatch.ElapsedMilliseconds.Should().BeLessThan(200,
+                "Concurrent requests should complete faster than sequential execution");
+
+            // Verify requests started within a reasonable time window (indicating parallelism)
+            var timeSpan = concurrentRequests.Max() - concurrentRequests.Min();
+            timeSpan.Should().BeLessThan(TimeSpan.FromMilliseconds(100),
+                "All requests should start nearly simultaneously");
+        }
     }
 }
