@@ -23,6 +23,7 @@ It abstracts low-level HTTP communication, authentication, and request/response 
 
 ```powershell
 dotnet add package Kulipa.Sdk
+```
 
 ## Development Guidelines
 - Architecture: Clean architecture, SOLID principles
