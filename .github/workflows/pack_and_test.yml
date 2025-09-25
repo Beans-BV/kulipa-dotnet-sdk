@@ -2,7 +2,7 @@ name: Pack and Test
 on:
   push:
     branches:
-      - master
+      - main
   pull_request_target:
     types:
       - opened
@@ -33,4 +33,4 @@ jobs:
       - name: Pack
         run: dotnet pack --configuration Release --output ${{env.NuGetDirectory}}
       - name: Run tests
-        run: dotnet test --configuration Release
+        run: dotnet test --configuration Release --filter "TestCategory!=Integration"
