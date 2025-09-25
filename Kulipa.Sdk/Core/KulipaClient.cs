@@ -1,5 +1,6 @@
 using Kulipa.Sdk.Configuration;
 using Kulipa.Sdk.Resources;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Kulipa.Sdk.Core
