@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Kulipa.Sdk.Configuration;
 using Kulipa.Sdk.Models.Webhooks;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Kulipa.Sdk.Webhooks

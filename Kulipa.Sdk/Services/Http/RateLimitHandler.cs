@@ -1,5 +1,6 @@
 using System.Net;
 using Kulipa.Sdk.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace Kulipa.Sdk.Services.Http
 {
