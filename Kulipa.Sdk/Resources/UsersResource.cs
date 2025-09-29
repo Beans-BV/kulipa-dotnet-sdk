@@ -1,5 +1,10 @@
-using Kulipa.Sdk.Models.Common;
-using Kulipa.Sdk.Models.Users;
+using Kulipa.Sdk.Models.Requests.Common;
+using Kulipa.Sdk.Models.Requests.Users;
+using Kulipa.Sdk.Models.Responses.Common;
+using Kulipa.Sdk.Models.Responses.Users;
+using Address = Kulipa.Sdk.Models.Requests.Users.Address;
+using Phone = Kulipa.Sdk.Models.Requests.Common.Phone;
+using ShippingAddress = Kulipa.Sdk.Models.Requests.Users.ShippingAddress;
 
 namespace Kulipa.Sdk.Resources
 {

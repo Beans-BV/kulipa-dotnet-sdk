@@ -1,5 +1,7 @@
-using Kulipa.Sdk.Models.Cards;
-using Kulipa.Sdk.Models.Common;
+using Kulipa.Sdk.Models.Requests.Cards;
+using Kulipa.Sdk.Models.Requests.Common;
+using Kulipa.Sdk.Models.Responses.Cards;
+using Kulipa.Sdk.Models.Responses.Common;
 
 namespace Kulipa.Sdk.Resources
 {

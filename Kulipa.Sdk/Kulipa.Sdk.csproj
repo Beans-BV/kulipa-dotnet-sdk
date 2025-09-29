@@ -28,6 +28,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Folder Include="Models\Kyc\"/>
+        <Folder Include="Models\Responses\"/>
         <Folder Include="Services\Serialization\"/>
     </ItemGroup>
     <ItemGroup>
