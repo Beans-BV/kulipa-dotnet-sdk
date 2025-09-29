@@ -5,8 +5,13 @@ namespace Kulipa.Sdk.Core
     /// <summary>
     ///     Main interface for interacting with the Kulipa API.
     /// </summary>
-    public interface IKulipaClient : IDisposable
+    public interface IKulipaClient
     {
+        /// <summary>
+        ///     Gets the KYC resource for managing KYC operations.
+        /// </summary>
+        IKycsResource Kycs { get; }
+
         /// <summary>
         ///     Gets the Users resource for managing user operations.
         /// </summary>

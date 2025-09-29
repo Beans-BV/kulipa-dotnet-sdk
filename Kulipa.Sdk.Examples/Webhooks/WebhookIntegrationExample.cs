@@ -93,13 +93,6 @@ namespace Kulipa.Sdk.Tests.Integration
         public async Task VerifyWebhook_TamperedBody_FailsVerification()
         {
             // Arrange
-            var originalPayload = new
-            {
-                userId = "usr-b036777a-d790-4cd3-a3d5-3bc1982eccc2",
-                eventId = "bd4624fd-ca50-4698-8558-354e522f4416",
-                eventName = "card.created",
-                eventTargetId = "crd-3d3bb4df-280d-45f1-807a-ae1f54506a35"
-            };
             var tamperedPayload = new
             {
                 userId = "usr-b036777a-d790-4cd3-a3d5-3bc1982eccc2",
@@ -108,7 +101,6 @@ namespace Kulipa.Sdk.Tests.Integration
                 eventTargetId = "crd-3d3bb4df-280d-45f1-807a-ae1f54506a34"
             };
 
-            var originalBody = JsonSerializer.Serialize(originalPayload);
             var tamperedBody = JsonSerializer.Serialize(tamperedPayload);
             var timestamp = "1758011225399";
             var keyId = "dwk-d5418756-4908-4077-b053-3bc662820f85";
@@ -166,12 +158,6 @@ namespace Kulipa.Sdk.Tests.Integration
                 "Should indicate timestamp is too old"
             );
         }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            _client?.Dispose();
-        }
     }
 
     /// <summary>
@@ -193,17 +179,6 @@ namespace Kulipa.Sdk.Tests.Integration
             var messageBytes = Encoding.UTF8.GetBytes(signedPayload);
             var signature = _ecdsa.SignData(messageBytes, HashAlgorithmName.SHA256);
             return Convert.ToBase64String(signature);
-        }
-
-        public string GetPublicKey()
-        {
-            var publicKey = _ecdsa.ExportSubjectPublicKeyInfo();
-            return Convert.ToBase64String(publicKey);
-        }
-
-        public void Dispose()
-        {
-            _ecdsa?.Dispose();
         }
     }
 }
