@@ -1,6 +1,7 @@
 namespace Kulipa.Sdk.Resources
 {
-    public class IKycsResource
-    {
-    }
+    /// <summary>
+    ///     Interface for KYC operations.
+    /// </summary>
+    public interface IKycsResource;
 }

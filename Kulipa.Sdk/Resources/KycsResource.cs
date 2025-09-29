@@ -1,7 +1,13 @@
 namespace Kulipa.Sdk.Resources
 {
-    /// <inheritdoc />
-    public class KycsResource : IKycsResource
+    /// <summary>
+    ///     Implementation of KYC operations.
+    /// </summary>
+    public class KycsResource : BaseResource, IKycsResource
     {
+        /// <inheritdoc />
+        public KycsResource(HttpClient httpClient) : base(httpClient)
+        {
+        }
     }
 }
