@@ -12,7 +12,7 @@ namespace Kulipa.Sdk.Services.Http
         private readonly KulipaSdkOptions _options;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="IdempotencyHandler"/> class.
+        ///     Initializes a new instance of the <see cref="IdempotencyHandler" /> class.
         /// </summary>
         /// <param name="options">The SDK configuration options containing idempotency settings.</param>
         public IdempotencyHandler(IOptions<KulipaSdkOptions> options)

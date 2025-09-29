@@ -12,26 +12,24 @@ namespace Kulipa.Sdk.Models.Users
         ///     The first name of the user - Minimum of 2 up to 64 characters in length as a string. In case the user have several
         ///     first names, they can be concatenated with a whitespace.
         /// </summary>
-        [Required]
         [StringLength(64, MinimumLength = 2)]
         [JsonPropertyName("firstName")]
-        public required string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         /// <summary>
         ///     The last name of the user - Minimum of 2 up to 64 characters in length as a string. In case the user have several
         ///     last names, they can be concatenated with a whitespace.
         /// </summary>
-        [Required]
         [StringLength(64, MinimumLength = 2)]
         [JsonPropertyName("lastName")]
-        public required string LastName { get; set; }
+        public string? LastName { get; set; }
 
         /// <summary>
         ///     Non-custodial primary wallet information of the user.
         /// </summary>
         [Required]
         [JsonPropertyName("wallet")]
-        public required UserWallet UserWallet { get; set; }
+        public UserWallet UserWallet { get; set; } = null!;
 
         /// <summary>
         ///     Legitimate email ID of the card user. This entry should be distinct among all users.

@@ -11,12 +11,12 @@ namespace Kulipa.Sdk.Models.Cards
         ///     Gets or sets the first line of the printed name on the card.
         /// </summary>
         [JsonPropertyName("printedName1")]
-        public string? PrintedName1 { get; set; }
+        public string PrintedName1 { get; set; } = null!;
 
         /// <summary>
         ///     Gets or sets the second line of the printed name on the card.
         /// </summary>
         [JsonPropertyName("printedName2")]
-        public string? PrintedName2 { get; set; }
+        public string PrintedName2 { get; set; } = null!;
     }
 }

@@ -1,9 +1,11 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Kulipa.Sdk.Models.Users
 {
     /// <summary>
     ///     Represents a physical address.
+    ///     Can be used in either a request or a response model.
     /// </summary>
     public class Address
     {
@@ -11,8 +13,9 @@ namespace Kulipa.Sdk.Models.Users
         ///     Number and street of the address (e.g., street or company name).
         ///     Maximum length: 150 characters.
         /// </summary>
+        [Required]
         [JsonPropertyName("address1")]
-        public required string Address1 { get; set; }
+        public string Address1 { get; set; } = null!;
 
         /// <summary>
         ///     Address complementary information (e.g., apartment, place, or building).
@@ -25,22 +28,26 @@ namespace Kulipa.Sdk.Models.Users
         ///     Postal code or ZIP of the address.
         ///     Maximum length: 16 characters.
         /// </summary>
+        [Required]
         [JsonPropertyName("postalCode")]
-        public required string PostalCode { get; set; }
+        public string PostalCode { get; set; } = null!;
 
         /// <summary>
         ///     City of the address.
         ///     Maximum length: 50 characters.
         /// </summary>
+
+        [Required]
         [JsonPropertyName("city")]
-        public required string City { get; set; }
+        public string City { get; set; } = null!;
 
         /// <summary>
         ///     Country code of the address in ISO 3166-1 alpha-2.
         ///     Maximum length: 2 characters.
         /// </summary>
+        [Required]
         [JsonPropertyName("country")]
-        public required string Country { get; set; }
+        public string Country { get; set; } = null!;
 
         /// <summary>
         ///     State, county, province, or region.

@@ -14,7 +14,7 @@ namespace Kulipa.Sdk.Models.Users
         /// </summary>
         [Required]
         [JsonPropertyName("blockchain")]
-        public required BlockchainNetwork Blockchain { get; set; } = BlockchainNetwork.StellarTestnet;
+        public BlockchainNetwork Blockchain { get; set; } = BlockchainNetwork.StellarTestnet;
 
         /// <summary>
         ///     User's withdrawal wallet address on the blockchain network.
@@ -23,6 +23,6 @@ namespace Kulipa.Sdk.Models.Users
         /// </summary>
         [Required]
         [JsonPropertyName("withdrawalAddress")]
-        public required string WithdrawalAddress { get; set; }
+        public string WithdrawalAddress { get; set; } = null!;
     }
 }

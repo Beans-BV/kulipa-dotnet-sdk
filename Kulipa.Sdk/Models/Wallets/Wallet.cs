@@ -12,19 +12,19 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     Wallet identifier. Begins with 'wlt-' followed by a v4 UUID.
         /// </summary>
         [JsonPropertyName("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         /// <summary>
         ///     Name for the wallet.
         /// </summary>
         [JsonPropertyName("name")]
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; } = null!;
 
         /// <summary>
         ///     The UUID of the cardholder user.
         /// </summary>
         [JsonPropertyName("userId")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         /// <summary>
         ///     Status of the wallet.
@@ -37,7 +37,7 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("address")]
-        public string Address { get; set; }
+        public string Address { get; set; } = null!;
 
         /// <summary>
         ///     A blockchain on which a wallet is deployed.
@@ -57,7 +57,7 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("publicKey")]
-        public string PublicKey { get; set; }
+        public string PublicKey { get; set; } = null!;
 
         /// <summary>
         ///     Creation date.

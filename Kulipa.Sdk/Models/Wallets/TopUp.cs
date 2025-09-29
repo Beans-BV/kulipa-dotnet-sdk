@@ -12,19 +12,19 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     A Blockchain Transaction identifier. Begins with 'btn-' followed by a v4 UUID.
         /// </summary>
         [JsonPropertyName("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         /// <summary>
         ///     The UUID of the cardholder user.
         /// </summary>
         [JsonPropertyName("userId")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         /// <summary>
         ///     The UUID of the user's wallet.
         /// </summary>
         [JsonPropertyName("walletId")]
-        public required string WalletId { get; set; }
+        public string WalletId { get; set; } = null!;
 
         /// <summary>
         ///     Status of the top-up transaction.
@@ -36,7 +36,7 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("contractAddress")]
-        public string ContractAddress { get; set; }
+        public string ContractAddress { get; set; } = null!;
 
         /// <summary>
         ///     A blockchain on which the wallet is deployed.
@@ -48,7 +48,7 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("transactionHash")]
-        public string TransactionHash { get; set; }
+        public string TransactionHash { get; set; } = null!;
 
         /// <summary>
         ///     The block number where the transaction was included.

@@ -12,7 +12,7 @@ namespace Kulipa.Sdk.Services.Authentication
         private readonly KulipaSdkOptions _options;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ApiKeyAuthenticationHandler"/> class.
+        ///     Initializes a new instance of the <see cref="ApiKeyAuthenticationHandler" /> class.
         /// </summary>
         /// <param name="options">The SDK configuration options containing the API key.</param>
         public ApiKeyAuthenticationHandler(IOptions<KulipaSdkOptions> options)
