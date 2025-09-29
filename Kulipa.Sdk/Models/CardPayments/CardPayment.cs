@@ -12,40 +12,40 @@ namespace Kulipa.Sdk.Models.CardPayments
         ///     Unique identifier for the card payment.
         /// </summary>
         [JsonPropertyName("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         /// <summary>
         ///     The type of payment transaction (payment or refund).
         /// </summary>
         [JsonPropertyName("type")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public required CardPaymentType Type { get; set; }
+        public CardPaymentType Type { get; set; }
 
         /// <summary>
         ///     The status of the payment during its lifecycle.
         /// </summary>
         [JsonPropertyName("status")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public required CardPaymentStatus Status { get; set; }
+        public CardPaymentStatus Status { get; set; }
 
         /// <summary>
         ///     In case the payment is rejected, this would supply a reason for the rejection.
         /// </summary>
         [JsonPropertyName("declineReason")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public required CardPaymentDeclineReason DeclineReason { get; set; }
+        public CardPaymentDeclineReason DeclineReason { get; set; }
 
         /// <summary>
         ///     Unique identifier for the transaction's card.
         /// </summary>
         [JsonPropertyName("cardId")]
-        public required string CardId { get; set; }
+        public string CardId { get; set; } = null!;
 
         /// <summary>
         ///     Unique identifier for the transaction's card holder user.
         /// </summary>
         [JsonPropertyName("userId")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         /// <summary>
         ///     The payment amount, which includes the already-settled amount as well as still-held funds. If the payment is in
@@ -53,14 +53,14 @@ namespace Kulipa.Sdk.Models.CardPayments
         ///     108.62 USD would be represented as 10862.
         /// </summary>
         [JsonPropertyName("amount")]
-        public required decimal Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         ///     The original authorized amount. This amount is presented in its minimal currency denomination. 108.62 USD would be
         ///     represented as 10862
         /// </summary>
         [JsonPropertyName("originalAmount")]
-        public required decimal OriginalAmount { get; set; }
+        public decimal OriginalAmount { get; set; }
 
         /// <summary>
         ///     The original authorized amount, expressed in merchantCurrency and in typical units of the currency (i.e. fractions

@@ -11,19 +11,19 @@ namespace Kulipa.Sdk.Models.Webhooks
         ///     Gets or sets the unique identifier of the key.
         /// </summary>
         [JsonPropertyName("id")]
-        public string Id { get; set; } = string.Empty;
+        public string Id { get; set; } = null!;
 
         /// <summary>
         ///     Gets or sets the algorithm used for signing.
         /// </summary>
         [JsonPropertyName("algorithm")]
-        public string Algorithm { get; set; } = string.Empty;
+        public string Algorithm { get; set; } = null!;
 
         /// <summary>
         ///     Gets or sets the public key value.
         /// </summary>
         [JsonPropertyName("publicKey")]
-        public string PublicKey { get; set; } = string.Empty;
+        public string PublicKey { get; set; } = null!;
 
         /// <summary>
         ///     Gets or sets the creation timestamp.

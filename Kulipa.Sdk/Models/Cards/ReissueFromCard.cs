@@ -13,7 +13,7 @@ namespace Kulipa.Sdk.Models.Cards
         /// </summary>
         [Required]
         [JsonPropertyName("id")]
-        public string Id { get; set; } = string.Empty;
+        public string Id { get; set; } = null!;
 
         /// <summary>
         ///     Reason for reissue.

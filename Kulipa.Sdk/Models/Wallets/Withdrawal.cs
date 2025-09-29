@@ -11,19 +11,19 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     Withdrawal identifier. Begins with 'wdr-' followed by a v4 UUID.
         /// </summary>
         [JsonPropertyName("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; } = null!;
 
         /// <summary>
         ///     The UUID of the cardholder user.
         /// </summary>
         [JsonPropertyName("userId")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         /// <summary>
         ///     The UUID of the user's wallet.
         /// </summary>
         [JsonPropertyName("walletId")]
-        public required string WalletId { get; set; }
+        public string WalletId { get; set; } = null!;
 
         /// <summary>
         ///     Current status of the withdrawal transaction.
@@ -37,14 +37,14 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("tokenId")]
-        public string TokenId { get; set; }
+        public string TokenId { get; set; } = null!;
 
         /// <summary>
         ///     Smart contract address of the token being withdrawn.
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("contractAddress")]
-        public string ContractAddress { get; set; }
+        public string ContractAddress { get; set; } = null!;
 
         /// <summary>
         ///     Blockchain transaction hash for this withdrawal.

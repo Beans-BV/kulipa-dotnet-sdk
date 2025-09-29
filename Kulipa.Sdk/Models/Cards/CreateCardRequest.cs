@@ -21,7 +21,7 @@ namespace Kulipa.Sdk.Models.Cards
         /// </summary>
         [Required]
         [JsonPropertyName("userId")]
-        public string UserId { get; set; } = string.Empty;
+        public string UserId { get; set; } = null!;
 
         /// <summary>
         ///     Design identifier. Begins with 'dsn-' followed by a v4 UUID.

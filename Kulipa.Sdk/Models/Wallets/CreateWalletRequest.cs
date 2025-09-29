@@ -40,7 +40,8 @@ namespace Kulipa.Sdk.Models.Wallets
         ///     User's withdrawal wallet address on the blockchain network. This address is used to withdraw funds from the user's
         ///     kulipa prepaid account. Required for prepaid accounts.
         /// </summary>
+        [Required]
         [JsonPropertyName("withdrawalAddress")]
-        public string WithdrawalAddress { get; set; }
+        public string WithdrawalAddress { get; set; } = null!;
     }
 }
