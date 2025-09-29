@@ -44,7 +44,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             // Arrange
             var request = new CreateCardRequest
             {
-                Type = CardType.Virtual,
+                Format = CardFormat.Virtual,
                 UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Tier = CardTier.Standard,
                 CurrencyCode = "USD"
@@ -54,7 +54,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             {
                 Id = "crd-987f6543-e21b-43d2-b123-426614174111",
                 UserId = request.UserId,
-                Type = CardType.Virtual,
+                Format = CardFormat.Virtual,
                 Status = CardStatus.Active,
                 LastFourDigits = "1234",
                 CreatedAt = DateTime.UtcNow,
@@ -85,7 +85,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             result.Should().NotBeNull();
             result.Id.Should().Be(expectedCard.Id);
             result.UserId.Should().Be(expectedCard.UserId);
-            result.Type.Should().Be(expectedCard.Type);
+            result.Format.Should().Be(expectedCard.Format);
             result.LastFourDigits.Should().Be(expectedCard.LastFourDigits);
         }
 
@@ -102,7 +102,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             // Arrange
             var request = new CreateCardRequest
             {
-                Type = CardType.Physical,
+                Format = CardFormat.Physical,
                 UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Tier = CardTier.Premium,
                 DeliveryType = DeliveryType.ShipToUser
@@ -143,7 +143,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             // Arrange
             var request = new CreateCardRequest
             {
-                Type = CardType.Virtual,
+                Format = CardFormat.Virtual,
                 UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Tier = CardTier.Standard
             };
@@ -178,7 +178,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             // Arrange
             var request = new CreateCardRequest
             {
-                Type = CardType.Virtual,
+                Format = CardFormat.Virtual,
                 UserId = "usr-123",
                 Tier = CardTier.Standard
             };
@@ -428,7 +428,7 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 // Arrange
                 var request = new CreateCardRequest
                 {
-                    Type = CardType.Virtual,
+                    Format = CardFormat.Virtual,
                     UserId = "usr-123",
                     Tier = CardTier.Standard
                 };

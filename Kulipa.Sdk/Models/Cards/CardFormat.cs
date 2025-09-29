@@ -5,7 +5,7 @@ namespace Kulipa.Sdk.Models.Cards
     /// <summary>
     ///     Represents the physical form factor of a card.
     /// </summary>
-    public enum CardType
+    public enum CardFormat
     {
         /// <summary>
         ///     Physical card that can be shipped to the user.
