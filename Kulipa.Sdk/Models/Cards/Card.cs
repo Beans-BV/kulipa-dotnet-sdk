@@ -48,7 +48,7 @@ namespace Kulipa.Sdk.Models.Cards
         /// </summary>
         [JsonPropertyName("type")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardType Type { get; set; }
+        public CardFormat Format { get; set; }
 
         /// <summary>
         ///     Card status.

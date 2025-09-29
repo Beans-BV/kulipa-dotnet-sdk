@@ -14,7 +14,7 @@ namespace Kulipa.Sdk.Models.Cards
         [Required]
         [JsonPropertyName("type")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardType Type { get; set; }
+        public CardFormat Format { get; set; }
 
         /// <summary>
         ///     User identifier. Begins with 'usr-' followed by a v4 UUID.
