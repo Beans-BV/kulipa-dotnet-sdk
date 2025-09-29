@@ -44,20 +44,17 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             // Arrange
             var request = new CreateWalletRequest
             {
-                UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Name = "Test Wallet",
                 Blockchain = BlockchainNetwork.StellarTestnet,
-                Address = "xxx",
                 WithdrawalAddress = "yyy"
             };
 
             var expectedWallet = new Wallet
             {
                 Id = "wlt-987f6543-e21b-43d2-b123-426614174111",
-                UserId = request.UserId,
+                UserId = "usr-2eb2681f-8fdb-4270-b753-7bc4852a9142",
                 Name = request.Name,
-                Address = request
-                    .Address, // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
+                // Address =  TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
                 Status = WalletStatus.Unverified,
                 Blockchain = request.Blockchain,
                 CreatedAt = DateTime.UtcNow,
@@ -90,9 +87,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             result.UserId.Should().Be(expectedWallet.UserId);
             result.Name.Should().Be(expectedWallet.Name);
             result.Blockchain.Should().Be(expectedWallet.Blockchain);
-            result.Address.Should()
-                .Be(expectedWallet
-                    .Address); // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
+            // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
+            // result.Address.Should().Be(expectedWallet.Address); 
             result.Status.Should().Be(expectedWallet.Status);
         }
 
@@ -109,10 +105,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             // Arrange
             var request = new CreateWalletRequest
             {
-                UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Name = "Test Wallet",
                 Blockchain = BlockchainNetwork.StellarTestnet,
-                Address = "xxx",
                 WithdrawalAddress = "yyy"
             };
 
@@ -154,10 +148,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             // Arrange
             var request = new CreateWalletRequest
             {
-                UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Name = "Test Wallet",
                 Blockchain = BlockchainNetwork.StellarTestnet,
-                Address = "xxx",
                 WithdrawalAddress = "yyy"
             };
 
@@ -191,10 +183,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             // Arrange
             var request = new CreateWalletRequest
             {
-                UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Name = "Test Wallet",
                 Blockchain = BlockchainNetwork.StellarTestnet,
-                Address = "xxx",
                 WithdrawalAddress = "yyy"
             };
 
@@ -647,10 +637,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 // Arrange
                 var request = new CreateWalletRequest
                 {
-                    UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                     Name = "Test Wallet",
                     Blockchain = BlockchainNetwork.StellarTestnet,
-                    Address = "xxx",
                     WithdrawalAddress = "yyy"
                 };
 

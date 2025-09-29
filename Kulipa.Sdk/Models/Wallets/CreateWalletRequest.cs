@@ -5,16 +5,18 @@ using Kulipa.Sdk.Models.Common;
 namespace Kulipa.Sdk.Models.Wallets
 {
     /// <summary>
-    ///     Request to create a new wallet.
+    ///     Request to create a new separate wallet.
+    ///     Separate wallet creation is only supported for B2B distributors.
+    ///     Consumer wallets are created as a part of user creation API call.
     /// </summary>
     public class CreateWalletRequest
     {
         /// <summary>
-        ///     The UUID of the cardholder user.
+        ///     A Company identifier. Begins with 'cmp-' followed by a v4 UUID.
         /// </summary>
         [Required]
-        [JsonPropertyName("userId")]
-        public string UserId { get; set; }
+        [JsonPropertyName("companyId")]
+        public string CompanyId { get; set; } = null!;
 
         /// <summary>
         ///     Name for the wallet.
@@ -29,12 +31,6 @@ namespace Kulipa.Sdk.Models.Wallets
         [JsonPropertyName("blockchain")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public BlockchainNetwork Blockchain { get; set; } = BlockchainNetwork.StellarTestnet;
-
-        /// <summary>
-        ///     Address of the non-custodial wallet on the blockchain network. Required for debit accounts.
-        /// </summary>
-        [JsonPropertyName("address")]
-        public string Address { get; set; }
 
         /// <summary>
         ///     User's withdrawal wallet address on the blockchain network. This address is used to withdraw funds from the user's
