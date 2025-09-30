@@ -6,46 +6,46 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
     /// <summary>
     ///     Represents a card payment transaction in the Kulipa system.
     /// </summary>
-    public class CardPayment
+    public sealed record CardPayment
     {
         /// <summary>
         ///     Unique identifier for the card payment.
         /// </summary>
         [JsonPropertyName("id")]
-        public string Id { get; set; } = null!;
+        public string Id { get; init; } = null!;
 
         /// <summary>
         ///     The type of payment transaction (payment or refund).
         /// </summary>
         [JsonPropertyName("type")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardPaymentType Type { get; set; }
+        public CardPaymentType Type { get; init; }
 
         /// <summary>
         ///     The status of the payment during its lifecycle.
         /// </summary>
         [JsonPropertyName("status")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardPaymentStatus Status { get; set; }
+        public CardPaymentStatus Status { get; init; }
 
         /// <summary>
         ///     In case the payment is rejected, this would supply a reason for the rejection.
         /// </summary>
         [JsonPropertyName("declineReason")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardPaymentDeclineReason DeclineReason { get; set; }
+        public CardPaymentDeclineReason DeclineReason { get; init; }
 
         /// <summary>
         ///     Unique identifier for the transaction's card.
         /// </summary>
         [JsonPropertyName("cardId")]
-        public string CardId { get; set; } = null!;
+        public string CardId { get; init; } = null!;
 
         /// <summary>
         ///     Unique identifier for the transaction's card holder user.
         /// </summary>
         [JsonPropertyName("userId")]
-        public string UserId { get; set; } = null!;
+        public string UserId { get; init; } = null!;
 
         /// <summary>
         ///     The payment amount, which includes the already-settled amount as well as still-held funds. If the payment is in
@@ -53,14 +53,14 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
         ///     108.62 USD would be represented as 10862.
         /// </summary>
         [JsonPropertyName("amount")]
-        public decimal Amount { get; set; }
+        public decimal Amount { get; init; }
 
         /// <summary>
         ///     The original authorized amount. This amount is presented in its minimal currency denomination. 108.62 USD would be
         ///     represented as 10862
         /// </summary>
         [JsonPropertyName("originalAmount")]
-        public decimal OriginalAmount { get; set; }
+        public decimal OriginalAmount { get; init; }
 
         /// <summary>
         ///     The original authorized amount, expressed in merchantCurrency and in typical units of the currency (i.e. fractions
@@ -68,19 +68,19 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
         ///     is not guaranteed to, but will almost always be filled.
         /// </summary>
         [JsonPropertyName("originalMerchantAmount")]
-        public string? OriginalMerchantAmount { get; set; }
+        public string? OriginalMerchantAmount { get; init; }
 
         /// <summary>
         ///     The date when the authorization expires if not cleared.
         /// </summary>
         [JsonPropertyName("expirationAt")]
-        public DateTime? ExpirationAt { get; set; }
+        public DateTime? ExpirationAt { get; init; }
 
         /// <summary>
         ///     Three-letter ISO currency code describing the currency of the payment amount.
         /// </summary>
         [JsonPropertyName("currency")]
-        public string? Currency { get; set; }
+        public string? Currency { get; init; }
 
         /// <summary>
         ///     The amount that the merchant will obtain, expressed in merchantCurrency and in typical units of the currency (i.e.
@@ -88,7 +88,7 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
         ///     is not guaranteed to, but will almost always be filled.
         /// </summary>
         [JsonPropertyName("merchantAmount")]
-        public string? MerchantAmount { get; set; }
+        public string? MerchantAmount { get; init; }
 
         /// <summary>
         ///     The currency, denoted by the ISO 4217 code, in which the merchant will be paid. (i.e. the "original" currency of
@@ -96,24 +96,24 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
         ///     Length: 3 characters.
         /// </summary>
         [JsonPropertyName("merchantCurrency")]
-        public string? MerchantCurrency { get; set; }
+        public string? MerchantCurrency { get; init; }
 
         /// <summary>
         ///     Information about the merchant involved in the payment.
         /// </summary>
         [JsonPropertyName("merchant")]
-        public Merchant? Merchant { get; set; }
+        public Merchant? Merchant { get; init; }
 
         /// <summary>
         ///     The date the cardholder made the payment.
         /// </summary>
         [JsonPropertyName("paymentDateTime")]
-        public DateTime? PaymentDateTime { get; set; }
+        public DateTime? PaymentDateTime { get; init; }
 
         /// <summary>
         ///     Last update date.
         /// </summary>
         [JsonPropertyName("updatedAt")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; init; }
     }
 }

@@ -5,18 +5,18 @@ namespace Kulipa.Sdk.Models.Responses.Cards
     /// <summary>
     ///     Represents the name information to be embossed on a physical card.
     /// </summary>
-    public class EmbossedName
+    public sealed record EmbossedName
     {
         /// <summary>
-        ///     Gets or sets the first line of the printed name on the card.
+        ///     Gets the first line of the printed name on the card.
         /// </summary>
         [JsonPropertyName("printedName1")]
-        public string PrintedName1 { get; set; } = null!;
+        public string PrintedName1 { get; init; } = null!;
 
         /// <summary>
-        ///     Gets or sets the second line of the printed name on the card.
+        ///     Gets the second line of the printed name on the card.
         /// </summary>
         [JsonPropertyName("printedName2")]
-        public string PrintedName2 { get; set; } = null!;
+        public string PrintedName2 { get; init; } = null!;
     }
 }

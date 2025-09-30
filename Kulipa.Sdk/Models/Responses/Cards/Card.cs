@@ -6,106 +6,106 @@ namespace Kulipa.Sdk.Models.Responses.Cards
     /// <summary>
     ///     Represents a Kulipa card.
     /// </summary>
-    public class Card
+    public sealed record Card
     {
         /// <summary>
         ///     Card identifier. Begins with 'crd-' followed by a v4 UUID.
         /// </summary>
         [JsonPropertyName("id")]
-        public string Id { get; set; } = null!;
+        public string Id { get; init; } = null!;
 
         /// <summary>
         ///     The UUID of the card owner.
         /// </summary>
         [JsonPropertyName("userId")]
-        public string UserId { get; set; } = null!;
+        public string UserId { get; init; } = null!;
 
         /// <summary>
         ///     Currency code (e.g., USD).
         /// </summary>
         [JsonPropertyName("currencyCode")]
-        public string CurrencyCode { get; set; } = "USD";
+        public string CurrencyCode { get; init; } = "USD";
 
         /// <summary>
         ///     The UUID of the card's design.
         /// </summary>
         [JsonPropertyName("designId")]
-        public string? DesignId { get; set; }
+        public string? DesignId { get; init; }
 
         /// <summary>
         ///     Creation date.
         /// </summary>
         [JsonPropertyName("createdAt")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; init; }
 
         /// <summary>
         ///     Last update date.
         /// </summary>
         [JsonPropertyName("updatedAt")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; init; }
 
         /// <summary>
         ///     Card type.
         /// </summary>
         [JsonPropertyName("type")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardFormat Format { get; set; }
+        public CardFormat Format { get; init; }
 
         /// <summary>
         ///     Card status.
         /// </summary>
         [JsonPropertyName("status")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardStatus Status { get; set; }
+        public CardStatus Status { get; init; }
 
         /// <summary>
         ///     Last 4 digits of the card number.
         /// </summary>
         [JsonPropertyName("lastFourDigits")]
-        public string LastFourDigits { get; set; } = null!;
+        public string LastFourDigits { get; init; } = null!;
 
         /// <summary>
         ///     Whether contactless payments are enabled.
         /// </summary>
         [JsonPropertyName("contactlessEnabled")]
-        public bool ContactlessEnabled { get; set; }
+        public bool ContactlessEnabled { get; init; }
 
         /// <summary>
         ///     Whether ATM withdrawals are enabled.
         /// </summary>
         [JsonPropertyName("withdrawalEnabled")]
-        public bool WithdrawalEnabled { get; set; }
+        public bool WithdrawalEnabled { get; init; }
 
         /// <summary>
         ///     Whether internet purchases are enabled.
         /// </summary>
         [JsonPropertyName("internetPurchaseEnabled")]
-        public bool InternetPurchaseEnabled { get; set; }
+        public bool InternetPurchaseEnabled { get; init; }
 
         /// <summary>
         ///     Card expiration details.
         /// </summary>
         [JsonPropertyName("expiration")]
-        public CardExpiration Expiration { get; set; } = null!;
+        public CardExpiration Expiration { get; init; } = null!;
 
         /// <summary>
         ///     Embossed name on the card.
         /// </summary>
         [JsonPropertyName("embossedName")]
-        public EmbossedName EmbossedName { get; set; } = null!;
+        public EmbossedName EmbossedName { get; init; } = null!;
 
         /// <summary>
         ///     Who froze the card (only present when status is "frozen").
         /// </summary>
         [JsonPropertyName("frozenBy")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public FrozenBy? FrozenBy { get; set; }
+        public FrozenBy? FrozenBy { get; init; }
 
         /// <summary>
         ///     Card tier.
         /// </summary>
         [JsonPropertyName("tier")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardTier Tier { get; set; }
+        public CardTier Tier { get; init; }
     }
 }

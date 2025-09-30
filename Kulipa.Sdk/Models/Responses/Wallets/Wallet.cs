@@ -6,69 +6,69 @@ namespace Kulipa.Sdk.Models.Responses.Wallets
     /// <summary>
     ///     Represents a Kulipa wallet.
     /// </summary>
-    public class Wallet
+    public sealed record Wallet
     {
         /// <summary>
         ///     Wallet identifier. Begins with 'wlt-' followed by a v4 UUID.
         /// </summary>
         [JsonPropertyName("id")]
-        public string Id { get; set; } = null!;
+        public string Id { get; init; } = null!;
 
         /// <summary>
         ///     Name for the wallet.
         /// </summary>
         [JsonPropertyName("name")]
-        public string Name { get; set; } = null!;
+        public string Name { get; init; } = null!;
 
         /// <summary>
         ///     The UUID of the cardholder user.
         /// </summary>
         [JsonPropertyName("userId")]
-        public string UserId { get; set; } = null!;
+        public string UserId { get; init; } = null!;
 
         /// <summary>
         ///     Status of the wallet.
         /// </summary>
         [JsonPropertyName("status")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public WalletStatus Status { get; set; }
+        public WalletStatus Status { get; init; }
 
         /// <summary>
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("address")]
-        public string Address { get; set; } = null!;
+        public string Address { get; init; } = null!;
 
         /// <summary>
         ///     A blockchain on which a wallet is deployed.
         /// </summary>
         [JsonPropertyName("blockchain")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public BlockchainNetwork Blockchain { get; set; }
+        public BlockchainNetwork Blockchain { get; init; }
 
         /// <summary>
         ///     Verification date.
         /// </summary>
         [JsonPropertyName("verifiedAt")]
-        public DateTime VerifiedAt { get; set; }
+        public DateTime VerifiedAt { get; init; }
 
         /// <summary>
         ///     Kulipa public key created for the wallet.
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("publicKey")]
-        public string PublicKey { get; set; } = null!;
+        public string PublicKey { get; init; } = null!;
 
         /// <summary>
         ///     Creation date.
         /// </summary>
         [JsonPropertyName("createdAt")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; init; }
 
         /// <summary>
         ///     Last update date.
         /// </summary>
         [JsonPropertyName("updatedAt")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; init; }
     }
 }

@@ -5,18 +5,18 @@ namespace Kulipa.Sdk.Models.Responses.Users
     /// <summary>
     ///     Represents a phone number with country code.
     /// </summary>
-    public class Phone
+    public sealed record Phone
     {
         /// <summary>
         ///     Phone country prefix (for instance, +33). It should begin with a '+'.
         /// </summary>
         [JsonPropertyName("country")]
-        public string Country { get; set; } = null!;
+        public string Country { get; init; } = null!;
 
         /// <summary>
         ///     Phone number, not including the country prefix, with a maximum of 12 digits.
         /// </summary>
         [JsonPropertyName("number")]
-        public string Number { get; set; } = null!;
+        public string Number { get; init; } = null!;
     }
 }
