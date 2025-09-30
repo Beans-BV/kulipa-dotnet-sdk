@@ -55,8 +55,8 @@ namespace Kulipa.Sdk.Extensions
             services.AddTransient<RateLimitHandler>();
             services.AddTransient<IdempotencyHandler>();
 
-            // Register HTTP client for the main client
-            services.AddHttpClient<IKulipaClient, KulipaClient>(nameof(KulipaClient), (serviceProvider, client) =>
+            // Configure shared HttpClient for all Kulipa services
+            services.AddHttpClient(nameof(KulipaClient), (serviceProvider, client) =>
                 {
                     var options = serviceProvider.GetRequiredService<IOptions<KulipaSdkOptions>>();
                     ConfigureHttpClient(client, options.Value);
@@ -93,25 +93,47 @@ namespace Kulipa.Sdk.Extensions
                         5,
                         TimeSpan.FromSeconds(30)));
 
-            // Register delegating handlers
-            services.AddTransient<ApiKeyAuthenticationHandler>();
-            services.AddTransient<IdempotencyHandler>();
-            services.AddTransient<RateLimitHandler>();
+            // Register resources with shared HttpClient
+            services.AddScoped<ICardsResource>(serviceProvider =>
+            {
+                var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+                return new CardsResource(httpClientFactory.CreateClient(nameof(KulipaClient)));
+            });
+
+            services.AddScoped<IUsersResource>(serviceProvider =>
+            {
+                var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+                return new UsersResource(httpClientFactory.CreateClient(nameof(KulipaClient)));
+            });
+
+            services.AddScoped<IKycsResource>(serviceProvider =>
+            {
+                var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+                return new KycsResource(httpClientFactory.CreateClient(nameof(KulipaClient)));
+            });
+
+            services.AddScoped<IWalletsResource>(serviceProvider =>
+            {
+                var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+                return new WalletsResource(httpClientFactory.CreateClient(nameof(KulipaClient)));
+            });
+
+            services.AddScoped<ICardPaymentsResource>(serviceProvider =>
+            {
+                var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+                return new CardPaymentsResource(httpClientFactory.CreateClient(nameof(KulipaClient)));
+            });
+
+            // KulipaClient also uses the same configuration
+            services.AddHttpClient<IKulipaClient, KulipaClient>(nameof(KulipaClient));
 
             // Add webhook services
             services.AddKulipaWebhookServices();
-
-            services.AddScoped<ICardsResource, CardsResource>();
             services.AddScoped<IWebhooksResource, WebhooksResource>();
-            services.AddScoped<IUsersResource, UsersResource>();
-            services.AddScoped<IKycsResource, KycsResource>();
-            services.AddScoped<IWalletsResource, WalletsResource>();
-            services.AddScoped<ICardPaymentsResource, CardPaymentsResource>();
-            services.AddScoped<IUsersResource, UsersResource>();
-            services.AddScoped<IKycsResource, KycsResource>();
 
             return services;
         }
+
 
         private static void ConfigureHttpClient(HttpClient client, KulipaSdkOptions options)
         {

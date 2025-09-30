@@ -13,8 +13,6 @@ namespace Kulipa.Sdk.Core
         private readonly HttpClient _httpClient;
         private readonly ILogger<KulipaClient> _logger;
         private readonly KulipaSdkOptions _options;
-        private bool _disposed;
-
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="KulipaClient" /> class.
@@ -49,7 +47,7 @@ namespace Kulipa.Sdk.Core
             Kycs = kycsResource ?? throw new ArgumentNullException(nameof(kycsResource));
             Cards = cardsResource ?? throw new ArgumentNullException(nameof(cardsResource));
             CardPayments = cardPaymentsResource ?? throw new ArgumentNullException(nameof(cardPaymentsResource));
-            Webhooks = webhooksResource ?? throw new ArgumentNullException(nameof(webhooksResource)); // Add this
+            Webhooks = webhooksResource ?? throw new ArgumentNullException(nameof(webhooksResource));
 
             _logger.LogInformation("Kulipa SDK initialized for {Environment} environment", _options.Environment);
         }
@@ -92,27 +90,6 @@ namespace Kulipa.Sdk.Core
             {
                 _logger.LogError(ex, "API connection test failed with exception");
                 return false;
-            }
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    // HttpClient is managed by DI container, so we don't dispose it here
-                    _logger.LogDebug("Kulipa SDK disposed");
-                }
-
-                _disposed = true;
             }
         }
     }
