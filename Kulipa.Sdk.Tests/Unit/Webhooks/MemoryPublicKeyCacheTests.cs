@@ -85,7 +85,7 @@ namespace Kulipa.Sdk.Tests.Unit.Webhooks
                     Times.Once(),
                     ItExpr.Is<HttpRequestMessage>(req =>
                         req.Method == HttpMethod.Get &&
-                        req.RequestUri!.ToString().Contains($"/v1/webhooks/keys/{keyId}")),
+                        req.RequestUri!.ToString().Contains($"webhooks/keys/{keyId}")),
                     ItExpr.IsAny<CancellationToken>());
         }
 
@@ -194,7 +194,7 @@ namespace Kulipa.Sdk.Tests.Unit.Webhooks
                     Times.Exactly(2),
                     ItExpr.Is<HttpRequestMessage>(req =>
                         req.Method == HttpMethod.Get &&
-                        req.RequestUri!.ToString().Contains($"/v1/webhooks/keys/{keyId}")),
+                        req.RequestUri!.ToString().Contains($"webhooks/keys/{keyId}")),
                     ItExpr.IsAny<CancellationToken>());
         }
 
@@ -241,7 +241,7 @@ namespace Kulipa.Sdk.Tests.Unit.Webhooks
                     Times.Exactly(2),
                     ItExpr.Is<HttpRequestMessage>(req =>
                         req.Method == HttpMethod.Get &&
-                        req.RequestUri!.ToString().Contains($"/v1/webhooks/keys/{keyId}")),
+                        req.RequestUri!.ToString().Contains($"webhooks/keys/{keyId}")),
                     ItExpr.IsAny<CancellationToken>());
         }
 

@@ -59,7 +59,7 @@ namespace Kulipa.Sdk.Resources
             };
 
             return await ListAsync<CardPayment>(
-                "/cardPayments",
+                "cardPayments",
                 queryBuilder,
                 pagedRequest,
                 cancellationToken);

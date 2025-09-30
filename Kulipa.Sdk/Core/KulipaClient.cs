@@ -78,7 +78,7 @@ namespace Kulipa.Sdk.Core
                 _logger.LogDebug("Testing API connection");
 
                 // Try to list cards with limit 1 as a connection test
-                var response = await _httpClient.GetAsync("/cards?limit=1", cancellationToken);
+                var response = await _httpClient.GetAsync("cards?limit=1", cancellationToken);
 
                 var success = response.IsSuccessStatusCode;
 
