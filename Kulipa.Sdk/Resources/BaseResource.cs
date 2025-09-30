@@ -4,7 +4,8 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Web;
 using Kulipa.Sdk.Exceptions;
-using Kulipa.Sdk.Models.Common;
+using Kulipa.Sdk.Models.Requests.Common;
+using Kulipa.Sdk.Models.Responses.Common;
 
 namespace Kulipa.Sdk.Resources
 {

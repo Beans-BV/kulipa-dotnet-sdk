@@ -1,5 +1,7 @@
-using Kulipa.Sdk.Models.CardPayments;
-using Kulipa.Sdk.Models.Common;
+using Kulipa.Sdk.Models.Enums;
+using Kulipa.Sdk.Models.Requests.Common;
+using Kulipa.Sdk.Models.Responses.CardPayments;
+using Kulipa.Sdk.Models.Responses.Common;
 
 namespace Kulipa.Sdk.Resources
 {

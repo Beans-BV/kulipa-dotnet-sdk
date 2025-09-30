@@ -1,6 +1,9 @@
 using System.Collections.Specialized;
-using Kulipa.Sdk.Models.Common;
-using Kulipa.Sdk.Models.Wallets;
+using Kulipa.Sdk.Models.Enums;
+using Kulipa.Sdk.Models.Requests.Common;
+using Kulipa.Sdk.Models.Requests.Wallets;
+using Kulipa.Sdk.Models.Responses.Common;
+using Kulipa.Sdk.Models.Responses.Wallets;
 
 namespace Kulipa.Sdk.Resources
 {

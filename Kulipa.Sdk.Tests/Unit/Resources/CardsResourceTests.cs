@@ -3,8 +3,11 @@ using System.Text;
 using System.Text.Json;
 using FluentAssertions;
 using Kulipa.Sdk.Exceptions;
-using Kulipa.Sdk.Models.Cards;
-using Kulipa.Sdk.Models.Common;
+using Kulipa.Sdk.Models.Enums;
+using Kulipa.Sdk.Models.Requests.Cards;
+using Kulipa.Sdk.Models.Requests.Common;
+using Kulipa.Sdk.Models.Responses.Cards;
+using Kulipa.Sdk.Models.Responses.Common;
 using Kulipa.Sdk.Resources;
 using Moq;
 using Moq.Protected;
@@ -58,7 +61,9 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 Status = CardStatus.Active,
                 LastFourDigits = "1234",
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow,
+                Expiration = null!,
+                EmbossedName = null!
             };
 
             var responseJson = JsonSerializer.Serialize(expectedCard);
@@ -121,7 +126,14 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.Created,
-                    Content = new StringContent(JsonSerializer.Serialize(new Card()))
+                    Content = new StringContent(JsonSerializer.Serialize(new Card
+                    {
+                        Id = null!,
+                        UserId = null!,
+                        LastFourDigits = null!,
+                        Expiration = null!,
+                        EmbossedName = null!
+                    }))
                 });
 
             // Act
@@ -215,7 +227,11 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             {
                 Id = cardId,
                 Status = CardStatus.Frozen,
-                FrozenBy = FrozenBy.User
+                FrozenBy = FrozenBy.User,
+                UserId = null!,
+                LastFourDigits = null!,
+                Expiration = null!,
+                EmbossedName = null!
             };
 
             var httpResponse = new HttpResponseMessage
@@ -273,8 +289,24 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 HasMore = true,
                 Items = new List<Card>
                 {
-                    new() { Id = "crd-1", Status = CardStatus.Active },
-                    new() { Id = "crd-2", Status = CardStatus.Inactive }
+                    new()
+                    {
+                        Id = "crd-1",
+                        Status = CardStatus.Active,
+                        UserId = null!,
+                        LastFourDigits = null!,
+                        Expiration = null!,
+                        EmbossedName = null!
+                    },
+                    new()
+                    {
+                        Id = "crd-2",
+                        Status = CardStatus.Inactive,
+                        UserId = null!,
+                        LastFourDigits = null!,
+                        Expiration = null!,
+                        EmbossedName = null!
+                    }
                 }
             };
 
@@ -380,7 +412,11 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             {
                 Id = cardId,
                 Status = CardStatus.Frozen,
-                FrozenBy = FrozenBy.User
+                FrozenBy = FrozenBy.User,
+                UserId = null!,
+                LastFourDigits = null!,
+                Expiration = null!,
+                EmbossedName = null!
             };
 
             var httpResponse = new HttpResponseMessage
