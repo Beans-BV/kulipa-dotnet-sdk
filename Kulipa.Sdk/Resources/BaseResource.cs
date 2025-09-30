@@ -2,6 +2,7 @@ using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Web;
 using Kulipa.Sdk.Exceptions;
 using Kulipa.Sdk.Models.Requests.Common;
@@ -29,7 +30,8 @@ namespace Kulipa.Sdk.Resources
             _jsonOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                PropertyNameCaseInsensitive = true
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
             };
         }
 
