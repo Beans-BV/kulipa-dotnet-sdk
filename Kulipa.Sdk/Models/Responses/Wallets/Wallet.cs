@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Kulipa.Sdk.JsonConverters;
 using Kulipa.Sdk.Models.Enums;
 
 namespace Kulipa.Sdk.Models.Responses.Wallets
@@ -30,7 +31,6 @@ namespace Kulipa.Sdk.Models.Responses.Wallets
         ///     Status of the wallet.
         /// </summary>
         [JsonPropertyName("status")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public WalletStatus Status { get; init; }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Kulipa.Sdk.Models.Responses.Wallets
         ///     A blockchain on which a wallet is deployed.
         /// </summary>
         [JsonPropertyName("blockchain")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [JsonConverter(typeof(KebabCaseLowerJsonStringEnumConverter))]
         public BlockchainNetwork Blockchain { get; init; }
 
         /// <summary>

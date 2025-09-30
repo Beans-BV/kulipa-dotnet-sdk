@@ -48,14 +48,12 @@ namespace Kulipa.Sdk.Models.Responses.Cards
         ///     Card type.
         /// </summary>
         [JsonPropertyName("type")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public CardFormat Format { get; init; }
 
         /// <summary>
         ///     Card status.
         /// </summary>
         [JsonPropertyName("status")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public CardStatus Status { get; init; }
 
         /// <summary>
@@ -98,14 +96,12 @@ namespace Kulipa.Sdk.Models.Responses.Cards
         ///     Who froze the card (only present when status is "frozen").
         /// </summary>
         [JsonPropertyName("frozenBy")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public FrozenBy? FrozenBy { get; init; }
 
         /// <summary>
         ///     Card tier.
         /// </summary>
         [JsonPropertyName("tier")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public CardTier Tier { get; init; }
     }
 }

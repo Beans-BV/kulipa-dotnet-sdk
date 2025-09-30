@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Kulipa.Sdk.Models.Enums
 {
     /// <summary>
@@ -10,11 +8,11 @@ namespace Kulipa.Sdk.Models.Enums
         /// <summary>
         ///     Card was frozen by the user.
         /// </summary>
-        [JsonPropertyName("user")] User,
+        User,
 
         /// <summary>
         ///     Card was frozen by Kulipa (administrative action).
         /// </summary>
-        [JsonPropertyName("kulipa")] Kulipa
+        Kulipa
     }
 }

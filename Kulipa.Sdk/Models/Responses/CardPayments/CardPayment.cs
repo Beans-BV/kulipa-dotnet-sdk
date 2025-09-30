@@ -18,21 +18,18 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
         ///     The type of payment transaction (payment or refund).
         /// </summary>
         [JsonPropertyName("type")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public CardPaymentType Type { get; init; }
 
         /// <summary>
         ///     The status of the payment during its lifecycle.
         /// </summary>
         [JsonPropertyName("status")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public CardPaymentStatus Status { get; init; }
 
         /// <summary>
         ///     In case the payment is rejected, this would supply a reason for the rejection.
         /// </summary>
         [JsonPropertyName("declineReason")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public CardPaymentDeclineReason DeclineReason { get; init; }
 
         /// <summary>

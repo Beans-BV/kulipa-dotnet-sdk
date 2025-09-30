@@ -18,7 +18,6 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     User status.
         /// </summary>
         [JsonPropertyName("status")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public UserStatus Status { get; init; }
 
         /// <summary>

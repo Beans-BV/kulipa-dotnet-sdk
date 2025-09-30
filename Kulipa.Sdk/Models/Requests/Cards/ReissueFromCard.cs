@@ -20,7 +20,6 @@ namespace Kulipa.Sdk.Models.Requests.Cards
         /// </summary>
         [Required]
         [JsonPropertyName("reason")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public required ReissueReason Reason { get; init; }
     }
 }
