@@ -6,19 +6,19 @@ namespace Kulipa.Sdk.Models.Requests.Users
     /// <summary>
     ///     Represents a shipping address.
     /// </summary>
-    public class ShippingAddress
+    public sealed record ShippingAddress
     {
         /// <summary>
         ///     Recipient address.
         /// </summary>
         [Required]
         [JsonPropertyName("address")]
-        public Address Address { get; set; } = null!;
+        public required Address Address { get; init; }
 
         /// <summary>
         ///     Phone number of the recipient. One string of digits only with optional + at the start.
         /// </summary>
         [JsonPropertyName("phone")]
-        public string? Phone { get; set; }
+        public string? Phone { get; init; }
     }
 }

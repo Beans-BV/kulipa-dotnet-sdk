@@ -7,14 +7,14 @@ namespace Kulipa.Sdk.Models.Requests.Users
     /// <summary>
     ///     Represents a user's wallet information during card creation.
     /// </summary>
-    public class UserWallet
+    public sealed record UserWallet
     {
         /// <summary>
         ///     A blockchain on which a wallet is deployed.
         /// </summary>
         [Required]
         [JsonPropertyName("blockchain")]
-        public BlockchainNetwork Blockchain { get; set; } = BlockchainNetwork.StellarTestnet;
+        public required BlockchainNetwork Blockchain { get; init; }
 
         /// <summary>
         ///     User's withdrawal wallet address on the blockchain network.
@@ -23,6 +23,6 @@ namespace Kulipa.Sdk.Models.Requests.Users
         /// </summary>
         [Required]
         [JsonPropertyName("withdrawalAddress")]
-        public string WithdrawalAddress { get; set; } = null!;
+        public required string WithdrawalAddress { get; init; }
     }
 }

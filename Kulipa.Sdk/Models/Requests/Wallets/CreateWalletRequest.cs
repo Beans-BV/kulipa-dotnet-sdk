@@ -9,20 +9,20 @@ namespace Kulipa.Sdk.Models.Requests.Wallets
     ///     Separate wallet creation is only supported for B2B distributors.
     ///     Consumer wallets are created as a part of user creation API call.
     /// </summary>
-    public class CreateWalletRequest
+    public sealed record CreateWalletRequest
     {
         /// <summary>
         ///     A Company identifier. Begins with 'cmp-' followed by a v4 UUID.
         /// </summary>
         [Required]
         [JsonPropertyName("companyId")]
-        public string CompanyId { get; set; } = null!;
+        public required string CompanyId { get; set; }
 
         /// <summary>
         ///     Name for the wallet.
         /// </summary>
         [JsonPropertyName("name")]
-        public string? Name { get; set; }
+        public string? Name { get; init; }
 
         /// <summary>
         ///     A blockchain on which a wallet is deployed.
@@ -30,7 +30,7 @@ namespace Kulipa.Sdk.Models.Requests.Wallets
         [Required]
         [JsonPropertyName("blockchain")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public BlockchainNetwork Blockchain { get; set; } = BlockchainNetwork.StellarTestnet;
+        public required BlockchainNetwork Blockchain { get; init; }
 
         /// <summary>
         ///     User's withdrawal wallet address on the blockchain network. This address is used to withdraw funds from the user's
@@ -38,6 +38,6 @@ namespace Kulipa.Sdk.Models.Requests.Wallets
         /// </summary>
         [Required]
         [JsonPropertyName("withdrawalAddress")]
-        public string WithdrawalAddress { get; set; } = null!;
+        public required string WithdrawalAddress { get; init; }
     }
 }

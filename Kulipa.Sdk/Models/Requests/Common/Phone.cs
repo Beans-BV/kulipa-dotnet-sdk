@@ -6,20 +6,20 @@ namespace Kulipa.Sdk.Models.Requests.Common
     /// <summary>
     ///     Represents a phone number with country code.
     /// </summary>
-    public class Phone
+    public sealed record Phone
     {
         /// <summary>
         ///     Phone country prefix (for instance, +33). It should begin with a '+'.
         /// </summary>
         [Required]
         [JsonPropertyName("country")]
-        public string Country { get; set; } = null!;
+        public required string Country { get; init; }
 
         /// <summary>
         ///     Phone number, not including the country prefix, with a maximum of 12 digits.
         /// </summary>
         [Required]
         [JsonPropertyName("number")]
-        public string Number { get; set; } = null!;
+        public required string Number { get; init; }
     }
 }

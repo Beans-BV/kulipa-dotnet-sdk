@@ -6,14 +6,14 @@ namespace Kulipa.Sdk.Models.Requests.Cards
     /// <summary>
     ///     Represents information about a card being reissued from an existing card.
     /// </summary>
-    public class ReissueFromCard
+    public sealed record ReissueFromCard
     {
         /// <summary>
         ///     Card identifier. Begins with 'crd-' followed by a v4 UUID.
         /// </summary>
         [Required]
         [JsonPropertyName("id")]
-        public string Id { get; set; } = null!;
+        public required string Id { get; init; }
 
         /// <summary>
         ///     Reason for reissue.
@@ -21,6 +21,6 @@ namespace Kulipa.Sdk.Models.Requests.Cards
         [Required]
         [JsonPropertyName("reason")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public ReissueReason Reason { get; set; }
+        public required ReissueReason Reason { get; init; }
     }
 }
