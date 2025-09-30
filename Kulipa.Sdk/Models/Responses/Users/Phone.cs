@@ -11,12 +11,12 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     Phone country prefix (for instance, +33). It should begin with a '+'.
         /// </summary>
         [JsonPropertyName("country")]
-        public string Country { get; init; } = null!;
+        public required string Country { get; init; }
 
         /// <summary>
         ///     Phone number, not including the country prefix, with a maximum of 12 digits.
         /// </summary>
         [JsonPropertyName("number")]
-        public string Number { get; init; } = null!;
+        public required string Number { get; init; }
     }
 }

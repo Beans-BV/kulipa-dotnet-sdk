@@ -67,6 +67,6 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("currency")]
-        public string Currency { get; init; } = null!;
+        public required string Currency { get; init; }
     }
 }

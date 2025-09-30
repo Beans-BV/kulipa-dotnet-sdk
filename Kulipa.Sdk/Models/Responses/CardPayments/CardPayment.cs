@@ -12,7 +12,7 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
         ///     Unique identifier for the card payment.
         /// </summary>
         [JsonPropertyName("id")]
-        public string Id { get; init; } = null!;
+        public required string Id { get; init; }
 
         /// <summary>
         ///     The type of payment transaction (payment or refund).
@@ -39,13 +39,13 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
         ///     Unique identifier for the transaction's card.
         /// </summary>
         [JsonPropertyName("cardId")]
-        public string CardId { get; init; } = null!;
+        public required string CardId { get; init; }
 
         /// <summary>
         ///     Unique identifier for the transaction's card holder user.
         /// </summary>
         [JsonPropertyName("userId")]
-        public string UserId { get; init; } = null!;
+        public required string UserId { get; init; }
 
         /// <summary>
         ///     The payment amount, which includes the already-settled amount as well as still-held funds. If the payment is in

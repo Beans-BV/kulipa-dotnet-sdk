@@ -12,7 +12,7 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     Maximum length: 150 characters.
         /// </summary>
         [JsonPropertyName("address1")]
-        public string Address1 { get; init; } = null!;
+        public required string Address1 { get; init; }
 
         /// <summary>
         ///     Address complementary information (e.g., apartment, place, or building).
@@ -26,7 +26,7 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     Maximum length: 16 characters.
         /// </summary>
         [JsonPropertyName("postalCode")]
-        public string PostalCode { get; init; } = null!;
+        public required string PostalCode { get; init; }
 
         /// <summary>
         ///     City of the address.
@@ -34,14 +34,14 @@ namespace Kulipa.Sdk.Models.Responses.Users
         /// </summary>
 
         [JsonPropertyName("city")]
-        public string City { get; init; } = null!;
+        public required string City { get; init; }
 
         /// <summary>
         ///     Country code of the address in ISO 3166-1 alpha-2.
         ///     Maximum length: 2 characters.
         /// </summary>
         [JsonPropertyName("country")]
-        public string Country { get; init; } = null!;
+        public required string Country { get; init; }
 
         /// <summary>
         ///     State, county, province, or region.

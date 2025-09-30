@@ -61,7 +61,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 Status = WalletStatus.Unverified,
                 Blockchain = request.Blockchain,
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow,
+                PublicKey = null!
             };
 
             var responseJson = JsonSerializer.Serialize(expectedWallet);
@@ -127,7 +128,14 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 {
                     StatusCode = HttpStatusCode.Created,
                     Content = new StringContent(JsonSerializer.Serialize(
-                            new Wallet { Id = "", UserId = "" }
+                            new Wallet
+                            {
+                                Id = "",
+                                UserId = "",
+                                Name = null!,
+                                Address = null!,
+                                PublicKey = null!
+                            }
                         )
                     )
                 });
@@ -224,11 +232,13 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 Id = walletId,
                 UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Name = "Test wallet",
-                Address = "", // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
+                Address =
+                    "", // TODO Unconfirmed - Update this when Kulipa updates their docs after adding support for Stellar.
                 Status = WalletStatus.Frozen,
                 Blockchain = BlockchainNetwork.StellarTestnet,
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow,
+                PublicKey = null!
             };
 
             var httpResponse = new HttpResponseMessage
@@ -288,8 +298,24 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 HasMore = false,
                 Items =
                 [
-                    new Wallet { Id = "wlt-1", UserId = "usr-1", Status = WalletStatus.Active },
-                    new Wallet { Id = "wlt-2", UserId = "usr-1", Status = WalletStatus.Unverified }
+                    new Wallet
+                    {
+                        Id = "wlt-1",
+                        UserId = "usr-1",
+                        Status = WalletStatus.Active,
+                        Name = null!,
+                        Address = null!,
+                        PublicKey = null!
+                    },
+                    new Wallet
+                    {
+                        Id = "wlt-2",
+                        UserId = "usr-1",
+                        Status = WalletStatus.Unverified,
+                        Name = null!,
+                        Address = null!,
+                        PublicKey = null!
+                    }
                 ]
             };
 
@@ -397,7 +423,9 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 Id = walletId,
                 UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
                 Name = "Test wallet",
-                Status = WalletStatus.Active
+                Status = WalletStatus.Active,
+                Address = null!,
+                PublicKey = null!
             };
 
             var httpResponse = new HttpResponseMessage
@@ -449,35 +477,45 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                         Id = "wdr-1",
                         WalletId = walletId,
                         UserId = userId,
-                        Status = WithdrawalStatus.Pending
+                        Status = WithdrawalStatus.Pending,
+                        TokenId = null!,
+                        ContractAddress = null!
                     },
                     new Withdrawal
                     {
                         Id = "wdr-2",
                         WalletId = walletId,
                         UserId = userId,
-                        Status = WithdrawalStatus.Confirmed
+                        Status = WithdrawalStatus.Confirmed,
+                        TokenId = null!,
+                        ContractAddress = null!
                     },
                     new Withdrawal
                     {
                         Id = "wdr-3",
                         WalletId = walletId,
                         UserId = userId,
-                        Status = WithdrawalStatus.Failed
+                        Status = WithdrawalStatus.Failed,
+                        TokenId = null!,
+                        ContractAddress = null!
                     },
                     new Withdrawal
                     {
                         Id = "wdr-4",
                         WalletId = walletId,
                         UserId = userId,
-                        Status = WithdrawalStatus.Rejected
+                        Status = WithdrawalStatus.Rejected,
+                        TokenId = null!,
+                        ContractAddress = null!
                     },
                     new Withdrawal
                     {
                         Id = "wdr-5",
                         WalletId = walletId,
                         UserId = userId,
-                        Status = WithdrawalStatus.Draft
+                        Status = WithdrawalStatus.Draft,
+                        TokenId = null!,
+                        ContractAddress = null!
                     }
                 ]
             };
@@ -559,21 +597,27 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                         Id = "btn-1",
                         WalletId = walletId,
                         UserId = userId,
-                        Status = TopUpStatus.Confirmed
+                        Status = TopUpStatus.Confirmed,
+                        ContractAddress = null!,
+                        TransactionHash = null!
                     },
                     new TopUp
                     {
                         Id = "btn-2",
                         WalletId = walletId,
                         UserId = userId,
-                        Status = TopUpStatus.Failed
+                        Status = TopUpStatus.Failed,
+                        ContractAddress = null!,
+                        TransactionHash = null!
                     },
                     new TopUp
                     {
                         Id = "btn-3",
                         WalletId = walletId,
                         UserId = userId,
-                        Status = TopUpStatus.Confirmed
+                        Status = TopUpStatus.Confirmed,
+                        ContractAddress = null!,
+                        TransactionHash = null!
                     }
                 ]
             };

@@ -11,7 +11,7 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     Recipient address.
         /// </summary>
         [JsonPropertyName("address")]
-        public Address Address { get; init; } = null!;
+        public required Address Address { get; init; }
 
         /// <summary>
         ///     Phone number of the recipient. One string of digits only with optional + at the start.

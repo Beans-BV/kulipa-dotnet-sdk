@@ -17,13 +17,13 @@ namespace Kulipa.Sdk.Models.Responses.CardPayments
         ///     The city where the merchant is located.
         /// </summary>
         [JsonPropertyName("city")]
-        public string City { get; init; } = null!;
+        public required string City { get; init; }
 
         /// <summary>
         ///     The country where the merchant is located, in ISO 3166-1 alpha-2 format.
         /// </summary>
         [JsonPropertyName("country")]
-        public string Country { get; init; } = null!;
+        public required string Country { get; init; }
 
         /// <summary>
         ///     Merchant Category Code (MCC) identifying the type of goods or services provided by the merchant.

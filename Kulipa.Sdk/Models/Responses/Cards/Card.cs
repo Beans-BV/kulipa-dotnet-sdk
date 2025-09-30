@@ -12,13 +12,13 @@ namespace Kulipa.Sdk.Models.Responses.Cards
         ///     Card identifier. Begins with 'crd-' followed by a v4 UUID.
         /// </summary>
         [JsonPropertyName("id")]
-        public string Id { get; init; } = null!;
+        public required string Id { get; init; }
 
         /// <summary>
         ///     The UUID of the card owner.
         /// </summary>
         [JsonPropertyName("userId")]
-        public string UserId { get; init; } = null!;
+        public required string UserId { get; init; }
 
         /// <summary>
         ///     Currency code (e.g., USD).
@@ -62,7 +62,7 @@ namespace Kulipa.Sdk.Models.Responses.Cards
         ///     Last 4 digits of the card number.
         /// </summary>
         [JsonPropertyName("lastFourDigits")]
-        public string LastFourDigits { get; init; } = null!;
+        public required string LastFourDigits { get; init; }
 
         /// <summary>
         ///     Whether contactless payments are enabled.
@@ -86,13 +86,13 @@ namespace Kulipa.Sdk.Models.Responses.Cards
         ///     Card expiration details.
         /// </summary>
         [JsonPropertyName("expiration")]
-        public CardExpiration Expiration { get; init; } = null!;
+        public required CardExpiration Expiration { get; init; }
 
         /// <summary>
         ///     Embossed name on the card.
         /// </summary>
         [JsonPropertyName("embossedName")]
-        public EmbossedName EmbossedName { get; init; } = null!;
+        public required EmbossedName EmbossedName { get; init; }
 
         /// <summary>
         ///     Who froze the card (only present when status is "frozen").

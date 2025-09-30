@@ -12,7 +12,7 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     User identifier. Begins with 'usr-' followed by a v4 UUID.
         /// </summary>
         [JsonPropertyName("id")]
-        public string Id { get; init; } = null!;
+        public required string Id { get; init; }
 
         /// <summary>
         ///     User status.
@@ -25,13 +25,13 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     The first name of the user.
         /// </summary>
         [JsonPropertyName("firstName")]
-        public string FirstName { get; init; } = null!;
+        public required string FirstName { get; init; }
 
         /// <summary>
         ///     The last name of the user.
         /// </summary>
         [JsonPropertyName("lastName")]
-        public string LastName { get; init; } = null!;
+        public required string LastName { get; init; }
 
         /// <summary>
         ///     Legitimate email ID of the card user. This entry should be distinct among all users.

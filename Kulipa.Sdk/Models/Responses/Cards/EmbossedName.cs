@@ -11,12 +11,12 @@ namespace Kulipa.Sdk.Models.Responses.Cards
         ///     Gets the first line of the printed name on the card.
         /// </summary>
         [JsonPropertyName("printedName1")]
-        public string PrintedName1 { get; init; } = null!;
+        public required string PrintedName1 { get; init; }
 
         /// <summary>
         ///     Gets the second line of the printed name on the card.
         /// </summary>
         [JsonPropertyName("printedName2")]
-        public string PrintedName2 { get; init; } = null!;
+        public required string PrintedName2 { get; init; }
     }
 }

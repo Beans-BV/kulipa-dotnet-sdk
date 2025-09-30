@@ -11,12 +11,12 @@ namespace Kulipa.Sdk.Models.Responses.Users
         ///     First name.
         /// </summary>
         [JsonPropertyName("firstName")]
-        public string FirstName { get; init; } = null!;
+        public required string FirstName { get; init; }
 
         /// <summary>
         ///     Last name.
         /// </summary>
         [JsonPropertyName("lastName")]
-        public string LastName { get; init; } = null!;
+        public required string LastName { get; init; }
     }
 }

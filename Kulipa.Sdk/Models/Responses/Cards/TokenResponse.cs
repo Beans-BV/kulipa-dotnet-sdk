@@ -11,12 +11,12 @@ namespace Kulipa.Sdk.Models.Responses.Cards
         ///     Token identifier for viewing the PIN code.
         /// </summary>
         [JsonPropertyName("tokenId")]
-        public string TokenId { get; init; } = null!;
+        public required string TokenId { get; init; }
 
         /// <summary>
         ///     Callback URL for PIN code viewing.
         /// </summary>
         [JsonPropertyName("callbackUrl")]
-        public string CallbackUrl { get; init; } = null!;
+        public required string CallbackUrl { get; init; }
     }
 }
