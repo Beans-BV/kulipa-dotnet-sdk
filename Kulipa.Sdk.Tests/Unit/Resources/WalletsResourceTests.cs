@@ -49,7 +49,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             {
                 Name = "Test Wallet",
                 Blockchain = BlockchainNetwork.StellarTestnet,
-                WithdrawalAddress = "yyy"
+                WithdrawalAddress = "yyy",
+                CompanyId = null!,
             };
 
             var expectedWallet = new Wallet
@@ -62,7 +63,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 Blockchain = request.Blockchain,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
-                PublicKey = null!
+                PublicKey = null!,
+                Address = null!,
             };
 
             var responseJson = JsonSerializer.Serialize(expectedWallet);
@@ -111,7 +113,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             {
                 Name = "Test Wallet",
                 Blockchain = BlockchainNetwork.StellarTestnet,
-                WithdrawalAddress = "yyy"
+                WithdrawalAddress = "yyy",
+                CompanyId = null!,
             };
 
             var idempotencyKey = "test-idempotency-key-123";
@@ -161,7 +164,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             {
                 Name = "Test Wallet",
                 Blockchain = BlockchainNetwork.StellarTestnet,
-                WithdrawalAddress = "yyy"
+                WithdrawalAddress = "yyy",
+                CompanyId = null!,
             };
 
             var httpResponse = new HttpResponseMessage
@@ -196,7 +200,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
             {
                 Name = "Test Wallet",
                 Blockchain = BlockchainNetwork.StellarTestnet,
-                WithdrawalAddress = "yyy"
+                WithdrawalAddress = "yyy",
+                CompanyId = null!,
             };
 
             var httpResponse = new HttpResponseMessage
@@ -686,7 +691,8 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
                 {
                     Name = "Test Wallet",
                     Blockchain = BlockchainNetwork.StellarTestnet,
-                    WithdrawalAddress = "yyy"
+                    WithdrawalAddress = "yyy",
+                    CompanyId = null!,
                 };
 
                 _httpMessageHandlerMock
