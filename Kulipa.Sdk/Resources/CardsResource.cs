@@ -20,7 +20,7 @@ namespace Kulipa.Sdk.Resources
             CancellationToken cancellationToken = default)
         {
             return await PostAsync<CreateCardRequest, Card>(
-                "/cards",
+                "cards",
                 request,
                 idempotencyKey,
                 cancellationToken);
@@ -32,7 +32,7 @@ namespace Kulipa.Sdk.Resources
             CancellationToken cancellationToken = default)
         {
             return await GetByIdAsync<Card>(
-                $"/cards/{cardId}",
+                $"cards/{cardId}",
                 cardId,
                 nameof(cardId),
                 cancellationToken);
@@ -52,7 +52,7 @@ namespace Kulipa.Sdk.Resources
             }
 
             return await ListAsync<Card>(
-                "/cards",
+                "cards",
                 queryParameters,
                 pagedRequest,
                 cancellationToken);
@@ -67,7 +67,7 @@ namespace Kulipa.Sdk.Resources
             ValidateId(cardId, nameof(cardId));
 
             return await PutAsync<Card>(
-                $"/cards/{cardId}/activate",
+                $"cards/{cardId}/activate",
                 idempotencyKey,
                 cancellationToken);
         }
@@ -80,7 +80,7 @@ namespace Kulipa.Sdk.Resources
             ValidateId(cardId, nameof(cardId));
 
             return await PutAsync<Card>(
-                $"/cards/{cardId}/freeze",
+                $"cards/{cardId}/freeze",
                 idempotencyKey,
                 cancellationToken);
         }
@@ -94,7 +94,7 @@ namespace Kulipa.Sdk.Resources
             ValidateId(cardId, nameof(cardId));
 
             return await PutAsync<Card>(
-                $"/cards/{cardId}/unfreeze",
+                $"cards/{cardId}/unfreeze",
                 idempotencyKey,
                 cancellationToken);
         }
@@ -108,7 +108,7 @@ namespace Kulipa.Sdk.Resources
             ValidateId(cardId, nameof(cardId));
 
             return await PutAsync<Card>(
-                $"/cards/{cardId}/revoke",
+                $"cards/{cardId}/revoke",
                 idempotencyKey,
                 cancellationToken);
         }
@@ -122,7 +122,7 @@ namespace Kulipa.Sdk.Resources
             ValidateId(cardId, nameof(cardId));
 
             return await PostAsync<object, TokenResponse>(
-                $"/cards/{cardId}/pincode",
+                $"cards/{cardId}/pincode",
                 new { },
                 idempotencyKey,
                 cancellationToken);
@@ -137,7 +137,7 @@ namespace Kulipa.Sdk.Resources
             ValidateId(cardId, nameof(cardId));
 
             return await PostAsync<object, TokenResponse>(
-                $"/cards/{cardId}/pan",
+                $"cards/{cardId}/pan",
                 new { },
                 idempotencyKey,
                 cancellationToken);

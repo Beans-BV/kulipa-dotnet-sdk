@@ -20,7 +20,7 @@ namespace Kulipa.Sdk.Resources
             CancellationToken cancellationToken = default)
         {
             return await PostAsync<CreateUserRequest, User>(
-                "/users",
+                "users",
                 request,
                 idempotencyKey,
                 cancellationToken);
@@ -32,7 +32,7 @@ namespace Kulipa.Sdk.Resources
             CancellationToken cancellationToken = default)
         {
             return await GetByIdAsync<User>(
-                $"/users/{userId}",
+                $"users/{userId}",
                 userId,
                 nameof(userId),
                 cancellationToken);
@@ -52,7 +52,7 @@ namespace Kulipa.Sdk.Resources
             }
 
             return await ListAsync<User>(
-                "/users",
+                "users",
                 queryParameters,
                 pagedRequest,
                 cancellationToken);
@@ -64,7 +64,7 @@ namespace Kulipa.Sdk.Resources
             CancellationToken cancellationToken = default)
         {
             return await GetByIdAsync<Balance>(
-                $"/users/{userId}/balance",
+                $"users/{userId}/balance",
                 userId,
                 nameof(userId),
                 cancellationToken);
@@ -81,7 +81,7 @@ namespace Kulipa.Sdk.Resources
             ArgumentNullException.ThrowIfNull(phone);
 
             return await PutAsync<object, User>(
-                $"/users/{userId}/phone-number",
+                $"users/{userId}/phone-number",
                 phone,
                 idempotencyKey,
                 cancellationToken);
@@ -98,7 +98,7 @@ namespace Kulipa.Sdk.Resources
             ArgumentNullException.ThrowIfNull(email);
 
             return await PutAsync<object, User>(
-                $"/users/{userId}/email",
+                $"users/{userId}/email",
                 email,
                 idempotencyKey,
                 cancellationToken);
@@ -115,7 +115,7 @@ namespace Kulipa.Sdk.Resources
             ArgumentNullException.ThrowIfNull(address);
 
             return await PutAsync<object, User>(
-                $"/users/{userId}/address",
+                $"users/{userId}/address",
                 address,
                 idempotencyKey,
                 cancellationToken);
@@ -132,7 +132,7 @@ namespace Kulipa.Sdk.Resources
             ArgumentNullException.ThrowIfNull(address);
 
             return await PutAsync<object, User>(
-                $"/users/{userId}/shipping-address",
+                $"users/{userId}/shipping-address",
                 address,
                 idempotencyKey,
                 cancellationToken);

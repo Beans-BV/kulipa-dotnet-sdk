@@ -36,7 +36,7 @@ namespace Kulipa.Sdk.Resources
         ///     Generic GET operation for retrieving a single entity by ID.
         /// </summary>
         /// <typeparam name="T">The entity type to deserialize.</typeparam>
-        /// <param name="resourcePath">The API path (e.g., "/cards/{id}").</param>
+        /// <param name="resourcePath">The API path (e.g., "cards/{id}").</param>
         /// <param name="id">The entity ID.</param>
         /// <param name="idParameterName">The parameter name for validation (e.g., "cardId").</param>
         /// <param name="cancellationToken">Cancellation token.</param>
@@ -60,7 +60,7 @@ namespace Kulipa.Sdk.Resources
         /// </summary>
         /// <typeparam name="TRequest">The request model type.</typeparam>
         /// <typeparam name="TResponse">The response model type.</typeparam>
-        /// <param name="resourcePath">The API path (e.g., "/cards").</param>
+        /// <param name="resourcePath">The API path (e.g., "cards").</param>
         /// <param name="request">The request payload.</param>
         /// <param name="idempotencyKey">Optional idempotency key.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
@@ -91,7 +91,7 @@ namespace Kulipa.Sdk.Resources
         /// </summary>
         /// <typeparam name="TRequest">The request model type.</typeparam>
         /// <typeparam name="TResponse">The response model type.</typeparam>
-        /// <param name="resourcePath">The API path (e.g., "/cards/{id}/freeze").</param>
+        /// <param name="resourcePath">The API path (e.g., "cards/{id}/freeze").</param>
         /// <param name="request">The request payload (can be null for simple operations).</param>
         /// <param name="idempotencyKey">Optional idempotency key.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
@@ -121,7 +121,7 @@ namespace Kulipa.Sdk.Resources
         ///     Generic PUT operation for simple updates with no request body.
         /// </summary>
         /// <typeparam name="TResponse">The response model type.</typeparam>
-        /// <param name="resourcePath">The API path (e.g., "/cards/{id}/freeze").</param>
+        /// <param name="resourcePath">The API path (e.g., "cards/{id}/freeze").</param>
         /// <param name="idempotencyKey">Optional idempotency key.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The updated entity.</returns>
@@ -137,7 +137,7 @@ namespace Kulipa.Sdk.Resources
         ///     Generic list operation with pagination support.
         /// </summary>
         /// <typeparam name="T">The entity type in the paged response.</typeparam>
-        /// <param name="resourcePath">The base API path (e.g., "/cards").</param>
+        /// <param name="resourcePath">The base API path (e.g., "cards").</param>
         /// <param name="queryParameters">Additional query parameters.</param>
         /// <param name="pagedRequest">Pagination parameters.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
@@ -184,7 +184,7 @@ namespace Kulipa.Sdk.Resources
         ///     Generic list operation with advanced query parameter support (for arrays, dates, etc.).
         /// </summary>
         /// <typeparam name="T">The entity type in the paged response.</typeparam>
-        /// <param name="resourcePath">The base API path (e.g., "/cards").</param>
+        /// <param name="resourcePath">The base API path (e.g., "cards").</param>
         /// <param name="queryBuilder">Function to build query parameters.</param>
         /// <param name="pagedRequest">Pagination parameters.</param>
         /// <param name="cancellationToken">Cancellation token.</param>

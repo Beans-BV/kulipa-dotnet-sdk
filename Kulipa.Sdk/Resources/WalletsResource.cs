@@ -21,7 +21,7 @@ namespace Kulipa.Sdk.Resources
             CancellationToken cancellationToken = default)
         {
             return await PostAsync<CreateWalletRequest, Wallet>(
-                "/wallets",
+                "wallets",
                 request,
                 idempotencyKey,
                 cancellationToken);
@@ -33,7 +33,7 @@ namespace Kulipa.Sdk.Resources
             CancellationToken cancellationToken = default)
         {
             return await GetByIdAsync<Wallet>(
-                $"/wallets/{walletId}",
+                $"wallets/{walletId}",
                 walletId,
                 nameof(walletId),
                 cancellationToken);
@@ -59,7 +59,7 @@ namespace Kulipa.Sdk.Resources
             }
 
             return await ListAsync<Wallet>(
-                "/wallets",
+                "wallets",
                 queryParameters,
                 pagedRequest,
                 cancellationToken);
@@ -76,7 +76,7 @@ namespace Kulipa.Sdk.Resources
             ArgumentNullException.ThrowIfNull(typedData);
 
             return await PutAsync<object, Wallet>(
-                $"/wallets/{walletId}/verify",
+                $"wallets/{walletId}/verify",
                 typedData,
                 idempotencyKey,
                 cancellationToken);
@@ -99,7 +99,7 @@ namespace Kulipa.Sdk.Resources
             }
 
             return await PostAsync<object, Withdrawal>(
-                $"/wallets/{walletId}/withdrawals",
+                $"wallets/{walletId}/withdrawals",
                 request,
                 idempotencyKey,
                 cancellationToken);
@@ -142,7 +142,7 @@ namespace Kulipa.Sdk.Resources
             };
 
             return await ListAsync<Withdrawal>(
-                $"/wallets/{walletId}/withdrawals",
+                $"wallets/{walletId}/withdrawals",
                 queryBuilder,
                 pagedRequest,
                 cancellationToken);
@@ -157,7 +157,7 @@ namespace Kulipa.Sdk.Resources
             ValidateId(walletId, nameof(walletId));
 
             return await ListAsync<TopUp>(
-                $"/wallets/{walletId}/top-ups",
+                $"wallets/{walletId}/top-ups",
                 new Dictionary<string, string?>(),
                 pagedRequest, cancellationToken);
         }

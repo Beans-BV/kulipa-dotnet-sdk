@@ -56,7 +56,7 @@ namespace Kulipa.Sdk.Webhooks
                 _logger.LogInformation("Fetching public key from API for ID: {KeyId}", keyId);
 
                 var response = await _httpClient.GetAsync(
-                    $"/v1/webhooks/keys/{keyId}",
+                    $"webhooks/keys/{keyId}",
                     cancellationToken);
 
                 if (!response.IsSuccessStatusCode)

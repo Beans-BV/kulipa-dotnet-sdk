@@ -137,7 +137,10 @@ namespace Kulipa.Sdk.Extensions
 
         private static void ConfigureHttpClient(HttpClient client, KulipaSdkOptions options)
         {
-            client.BaseAddress = new Uri(options.BaseUrl);
+            var baseUrl = options.BaseUrl.EndsWith("/")
+                ? options.BaseUrl
+                : options.BaseUrl + "/";
+            client.BaseAddress = new Uri(baseUrl);
             client.Timeout = options.Timeout;
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             client.DefaultRequestHeaders.Add("User-Agent",
