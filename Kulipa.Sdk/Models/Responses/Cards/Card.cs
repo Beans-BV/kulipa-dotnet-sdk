@@ -48,7 +48,7 @@ namespace Kulipa.Sdk.Models.Responses.Cards
         ///     Card type.
         /// </summary>
         [JsonPropertyName("type")]
-        public CardFormat Format { get; init; }
+        public CardType Type { get; init; }
 
         /// <summary>
         ///     Card status.
