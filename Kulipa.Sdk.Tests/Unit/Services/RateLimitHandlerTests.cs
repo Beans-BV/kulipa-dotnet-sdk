@@ -156,10 +156,7 @@ namespace Kulipa.Sdk.Tests.Unit.Services
                     callCount++;
                     if (callCount == 1)
                     {
-                        var firstResponse = new HttpResponseMessage(HttpStatusCode.OK);
-                        firstResponse.Headers.Add("x-ratelimit-remaining", "0");
-                        firstResponse.Headers.Add("x-ratelimit-reset", "1");
-                        return firstResponse;
+                        return response;
                     }
 
                     return new HttpResponseMessage(HttpStatusCode.OK);
