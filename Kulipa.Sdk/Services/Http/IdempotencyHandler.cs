@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Kulipa.Sdk.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -59,12 +60,17 @@ namespace Kulipa.Sdk.Services.Http
         /// </summary>
         /// <param name="request">The HTTP request message.</param>
         /// <returns>A unique idempotency key string.</returns>
-        private string GenerateIdempotencyKey(HttpRequestMessage request)
+        private static string GenerateIdempotencyKey(HttpRequestMessage request)
         {
             // Generate a unique key based on method, URL, and timestamp
             var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             var guid = Guid.NewGuid().ToString("N");
-            return $"{request.Method}_{request.RequestUri?.PathAndQuery}_{guid}_{timestamp}";
+            var methodAndUrl = $"{request.Method}_{request.RequestUri?.PathAndQuery}";
+
+            // Create combined string and hash it to ensure max 64 chars
+            var combined = $"{methodAndUrl}_{guid}_{timestamp}";
+            var hashBytes = SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(combined));
+            return Convert.ToHexString(hashBytes);
         }
     }
 }

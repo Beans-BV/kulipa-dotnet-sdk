@@ -190,8 +190,7 @@ namespace Kulipa.Sdk.Tests.Unit.Services
             capturedRequest!.Headers.Should().ContainSingle(h => h.Key == "x-idempotency-key");
             var generatedKey = capturedRequest.Headers.GetValues("x-idempotency-key").First();
             generatedKey.Should().NotBeNullOrEmpty();
-            generatedKey.Should().Contain("POST_");
-            generatedKey.Should().Contain("/cards");
+            generatedKey.Length.Should().Be(64);
         }
 
         [TestMethod]
