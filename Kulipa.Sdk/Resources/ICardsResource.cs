@@ -86,11 +86,13 @@ namespace Kulipa.Sdk.Resources
         /// <summary>
         ///     A POST request sent to revoke a card.
         ///     <param name="cardId">A Card identifier.</param>
+        ///     <param name="request">Revoke card request containing the reason.</param>
         ///     <param name="idempotencyKey">Optional idempotency key for the request.</param>
         ///     <param name="cancellationToken">Cancellation token.</param>
         /// </summary>
         Task<Card> RevokeAsync(
             string cardId,
+            RevokeCardRequest request,
             string? idempotencyKey = null,
             CancellationToken cancellationToken = default);
 
