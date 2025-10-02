@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
-
-namespace Kulipa.Sdk.Models.Requests.Cards
+namespace Kulipa.Sdk.Models.Enums
 {
     /// <summary>
     ///     Represents the reason for reissuing a card.
@@ -10,16 +8,16 @@ namespace Kulipa.Sdk.Models.Requests.Cards
         /// <summary>
         ///     Card was lost.
         /// </summary>
-        [JsonPropertyName("lost")] Lost,
+        Lost,
 
         /// <summary>
         ///     Card was stolen from the user.
         /// </summary>
-        [JsonPropertyName("stolen")] Stolen,
+        Stolen,
 
         /// <summary>
         ///     Card has expired and needs replacement.
         /// </summary>
-        [JsonPropertyName("expired")] Expired
+        Expired
     }
 }
