@@ -62,14 +62,16 @@ namespace Kulipa.Sdk.Resources
 
         /// <inheritdoc />
         public async Task<Card> ActivateAsync(
-            string cardId, string activationCode,
+            string cardId,
+            ActivateCardRequest request,
             string? idempotencyKey = null,
             CancellationToken cancellationToken = default)
         {
             ValidateId(cardId, nameof(cardId));
 
-            return await PutAsync<Card>(
+            return await PutAsync<ActivateCardRequest, Card>(
                 $"cards/{cardId}/activate",
+                request,
                 idempotencyKey,
                 cancellationToken);
         }
