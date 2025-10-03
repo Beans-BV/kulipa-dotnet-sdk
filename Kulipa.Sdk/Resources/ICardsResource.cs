@@ -49,13 +49,13 @@ namespace Kulipa.Sdk.Resources
         ///     Activates a card .
         ///     This endpoint must be used for newly created physical cards.
         ///     <param name="cardId">A Card identifier.</param>
-        ///     <param name="activationCode">Final four numbers of the physical card that is activated for the first time.</param>
+        ///     <param name="request">Activate card request containing the activation code.</param>
         ///     <param name="idempotencyKey">Optional idempotency key for the request.</param>
         ///     <param name="cancellationToken">Cancellation token.</param>
         /// </summary>
         Task<Card> ActivateAsync(
             string cardId,
-            string activationCode,
+            ActivateCardRequest request,
             string? idempotencyKey = null,
             CancellationToken cancellationToken = default);
 
@@ -86,11 +86,13 @@ namespace Kulipa.Sdk.Resources
         /// <summary>
         ///     A POST request sent to revoke a card.
         ///     <param name="cardId">A Card identifier.</param>
+        ///     <param name="request">Revoke card request containing the reason.</param>
         ///     <param name="idempotencyKey">Optional idempotency key for the request.</param>
         ///     <param name="cancellationToken">Cancellation token.</param>
         /// </summary>
         Task<Card> RevokeAsync(
             string cardId,
+            RevokeCardRequest request,
             string? idempotencyKey = null,
             CancellationToken cancellationToken = default);
 
