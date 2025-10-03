@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Kulipa.Sdk.Models.Enums
 {
     /// <summary>
@@ -10,11 +8,11 @@ namespace Kulipa.Sdk.Models.Enums
         /// <summary>
         ///     Standard tier card with basic features.
         /// </summary>
-        [JsonPropertyName("standard")] Standard,
+        Standard,
 
         /// <summary>
         ///     Premium tier card with enhanced features and benefits.
         /// </summary>
-        [JsonPropertyName("premium")] Premium
+        Premium
     }
 }

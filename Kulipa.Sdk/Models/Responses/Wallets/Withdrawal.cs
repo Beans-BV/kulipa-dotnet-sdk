@@ -30,7 +30,6 @@ namespace Kulipa.Sdk.Models.Responses.Wallets
         ///     Current status of the withdrawal transaction.
         /// </summary>
         [JsonPropertyName("status")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public WithdrawalStatus Status { get; init; }
 
         /// <summary>

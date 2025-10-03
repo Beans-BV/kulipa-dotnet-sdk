@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Kulipa.Sdk.Models.Enums
 {
     /// <summary>
@@ -10,36 +8,36 @@ namespace Kulipa.Sdk.Models.Enums
         /// <summary>
         ///     Card is inactive.
         /// </summary>
-        [JsonPropertyName("inactive")] Inactive,
+        Inactive,
 
         /// <summary>
         ///     Card is active and can be used for transactions.
         /// </summary>
-        [JsonPropertyName("active")] Active,
+        Active,
 
         /// <summary>
         ///     Card has been cancelled.
         /// </summary>
-        [JsonPropertyName("cancelled")] Cancelled,
+        Cancelled,
 
         /// <summary>
         ///     Card is temporarily frozen and cannot be used.
         /// </summary>
-        [JsonPropertyName("frozen")] Frozen,
+        Frozen,
 
         /// <summary>
         ///     Card has been reported as lost.
         /// </summary>
-        [JsonPropertyName("lost")] Lost,
+        Lost,
 
         /// <summary>
         ///     Card has been reported as stolen.
         /// </summary>
-        [JsonPropertyName("stolen")] Stolen,
+        Stolen,
 
         /// <summary>
         ///     Card has expired and is no longer valid.
         /// </summary>
-        [JsonPropertyName("expired")] Expired
+        Expired
     }
 }

@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Kulipa.Sdk.Models.Enums
 {
     /// <summary>
@@ -10,6 +8,6 @@ namespace Kulipa.Sdk.Models.Enums
         /// <summary>
         ///     Card will be shipped directly to the user's address.
         /// </summary>
-        [JsonPropertyName("ship_to_user")] ShipToUser
+        ShipToUser
     }
 }

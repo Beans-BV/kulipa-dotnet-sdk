@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Kulipa.Sdk.JsonConverters;
 using Kulipa.Sdk.Models.Enums;
 
 namespace Kulipa.Sdk.Models.Requests.Cards
@@ -14,8 +15,7 @@ namespace Kulipa.Sdk.Models.Requests.Cards
         /// </summary>
         [Required]
         [JsonPropertyName("type")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public CardFormat Format { get; init; }
+        public CardType Type { get; init; }
 
         /// <summary>
         ///     User identifier. Begins with 'usr-' followed by a v4 UUID.
@@ -35,7 +35,6 @@ namespace Kulipa.Sdk.Models.Requests.Cards
         ///     Card tier.
         /// </summary>
         [JsonPropertyName("tier")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public CardTier Tier { get; init; } = CardTier.Standard;
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace Kulipa.Sdk.Models.Requests.Cards
         ///     Delivery type for physical cards (do not set for virtual cards).
         /// </summary>
         [JsonPropertyName("deliveryType")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [JsonConverter(typeof(SnakeCaseLowerJsonStringEnumConverter))]
         public DeliveryType? DeliveryType { get; init; }
     }
 }

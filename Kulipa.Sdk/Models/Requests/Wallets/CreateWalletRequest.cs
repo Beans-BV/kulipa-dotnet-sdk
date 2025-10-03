@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Kulipa.Sdk.JsonConverters;
 using Kulipa.Sdk.Models.Enums;
 
 namespace Kulipa.Sdk.Models.Requests.Wallets
@@ -29,7 +30,7 @@ namespace Kulipa.Sdk.Models.Requests.Wallets
         /// </summary>
         [Required]
         [JsonPropertyName("blockchain")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [JsonConverter(typeof(KebabCaseLowerJsonStringEnumConverter))]
         public required BlockchainNetwork Blockchain { get; init; }
 
         /// <summary>

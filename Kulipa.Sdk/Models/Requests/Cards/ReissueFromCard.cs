@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Kulipa.Sdk.Models.Enums;
 
 namespace Kulipa.Sdk.Models.Requests.Cards
 {
@@ -20,7 +21,6 @@ namespace Kulipa.Sdk.Models.Requests.Cards
         /// </summary>
         [Required]
         [JsonPropertyName("reason")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public required ReissueReason Reason { get; init; }
     }
 }

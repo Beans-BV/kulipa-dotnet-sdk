@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Kulipa.Sdk.Models.Enums
 {
     /// <summary>
@@ -10,11 +8,11 @@ namespace Kulipa.Sdk.Models.Enums
         /// <summary>
         ///     The top-up transaction has been confirmed and successfully processed.
         /// </summary>
-        [JsonPropertyName("confirmed")] Confirmed,
+        Confirmed,
 
         /// <summary>
         ///     The top-up transaction has failed and was not processed.
         /// </summary>
-        [JsonPropertyName("failed")] Failed
+        Failed
     }
 }
