@@ -111,5 +111,15 @@ namespace Kulipa.Sdk.Resources
             string walletId,
             PagedRequest? pagedRequest = null,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     Fetch the balance of a wallet.
+        /// </summary>
+        /// <param name="walletId">[Required] The UUID of the wallet.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>The wallet balance.</returns>
+        Task<WalletBalance> GetBalanceAsync(
+            string walletId,
+            CancellationToken cancellationToken = default);
     }
 }

@@ -670,6 +670,89 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
         }
 
         [TestMethod]
+        public async Task GetBalanceAsync_WithValidId_ReturnsWalletBalance()
+        {
+            // Arrange
+            var walletId = "wlt-123e4567-e89b-12d3-a456-426614174000";
+            var expectedBalance = new WalletBalance
+            {
+                AccountUsableBalance = 100000,
+                ReservedBalance = 500000,
+                BookedBalance = 100000,
+                PendingCardTransactions = 100000,
+                PendingWalletTransactions = 100000,
+                Currency = "USD6D"
+            };
+
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(JsonSerializer.Serialize(expectedBalance))
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Get &&
+                        req.RequestUri!.PathAndQuery == $"/wallets/{walletId}/balance"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act
+            var result = await _walletsResource.GetBalanceAsync(walletId);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.AccountUsableBalance.Should().Be(expectedBalance.AccountUsableBalance);
+            result.ReservedBalance.Should().Be(expectedBalance.ReservedBalance);
+            result.BookedBalance.Should().Be(expectedBalance.BookedBalance);
+            result.PendingCardTransactions.Should().Be(expectedBalance.PendingCardTransactions);
+            result.PendingWalletTransactions.Should().Be(expectedBalance.PendingWalletTransactions);
+            result.Currency.Should().Be(expectedBalance.Currency);
+        }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow("   ")]
+        public async Task GetBalanceAsync_WithInvalidId_ThrowsArgumentException(string invalidId)
+        {
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<ArgumentException>(() => _walletsResource.GetBalanceAsync(invalidId));
+        }
+
+        [TestMethod]
+        public async Task GetBalanceAsync_WithNotFoundError_ThrowsApiException()
+        {
+            // Arrange
+            var walletId = "wlt-nonexistent-wallet-id";
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Wallet not found")
+            };
+            httpResponse.Headers.Add("x-request-id", "req-789");
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Get &&
+                        req.RequestUri!.PathAndQuery == $"/wallets/{walletId}/balance"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsExactlyAsync<KulipaApiException>(
+                () => _walletsResource.GetBalanceAsync(walletId));
+
+            exception.RequestId.Should().Be("req-789");
+        }
+
+        [TestMethod]
         public async Task HandleErrorResponse_WithVariousStatusCodes_ThrowsCorrectExceptions()
         {
             // Arrange
