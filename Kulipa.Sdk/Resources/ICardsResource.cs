@@ -119,5 +119,21 @@ namespace Kulipa.Sdk.Resources
             string cardId,
             string? idempotencyKey = null,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     Creates a replacement card for an existing card that has been lost or stolen.
+        ///     The new card will have a new PAN, PIN, expiration date, and CVV2 number.
+        ///     Only virtual and physical cards can be reissued.
+        /// </summary>
+        /// <param name="cardId">A Card identifier.</param>
+        /// <param name="request">Reissue card request containing the reason.</param>
+        /// <param name="idempotencyKey">Optional idempotency key for the request.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>The newly issued replacement card.</returns>
+        Task<Card> ReissueAsync(
+            string cardId,
+            ReissueCardRequest request,
+            string? idempotencyKey = null,
+            CancellationToken cancellationToken = default);
     }
 }

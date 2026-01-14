@@ -445,6 +445,210 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
         }
 
         [TestMethod]
+        public async Task ReissueAsync_WithValidRequest_ReturnsNewCard()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var request = new ReissueCardRequest
+            {
+                Reason = ReissueReason.Lost
+            };
+
+            var expectedCard = new Card
+            {
+                Id = "crd-987f6543-e21b-43d2-b123-426614174222",
+                UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
+                Type = CardType.Virtual,
+                Status = CardStatus.Active,
+                LastFourDigits = "5678",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                Expiration = null!,
+                EmbossedName = null!
+            };
+
+            var responseJson = JsonSerializer.Serialize(expectedCard);
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Post &&
+                        req.RequestUri!.PathAndQuery == $"/cards/{cardId}/reissue"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act
+            var result = await _cardsResource.ReissueAsync(cardId, request);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(expectedCard.Id);
+            result.UserId.Should().Be(expectedCard.UserId);
+            result.Type.Should().Be(expectedCard.Type);
+            result.Status.Should().Be(CardStatus.Active);
+            result.LastFourDigits.Should().Be("5678");
+        }
+
+        [TestMethod]
+        public async Task ReissueAsync_WithStolenReason_ReturnsNewCard()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var request = new ReissueCardRequest
+            {
+                Reason = ReissueReason.Stolen
+            };
+
+            var expectedCard = new Card
+            {
+                Id = "crd-987f6543-e21b-43d2-b123-426614174333",
+                UserId = "usr-123e4567-e89b-12d3-a456-426614174000",
+                Type = CardType.Physical,
+                Status = CardStatus.Inactive,
+                LastFourDigits = "9999",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                Expiration = null!,
+                EmbossedName = null!
+            };
+
+            var responseJson = JsonSerializer.Serialize(expectedCard);
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Post &&
+                        req.RequestUri!.PathAndQuery == $"/cards/{cardId}/reissue"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act
+            var result = await _cardsResource.ReissueAsync(cardId, request);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(expectedCard.Id);
+            result.Type.Should().Be(CardType.Physical);
+            result.Status.Should().Be(CardStatus.Inactive);
+        }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow("   ")]
+        public async Task ReissueAsync_WithInvalidCardId_ThrowsArgumentException(string invalidId)
+        {
+            // Arrange
+            var request = new ReissueCardRequest
+            {
+                Reason = ReissueReason.Lost
+            };
+
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<ArgumentException>(() =>
+                _cardsResource.ReissueAsync(invalidId, request));
+        }
+
+        [TestMethod]
+        public async Task ReissueAsync_WithNullRequest_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+                _cardsResource.ReissueAsync(cardId, null!));
+        }
+
+        [TestMethod]
+        public async Task ReissueAsync_WithIdempotencyKey_AddsToRequestOptions()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var request = new ReissueCardRequest
+            {
+                Reason = ReissueReason.Lost
+            };
+            var idempotencyKey = "test-idempotency-key-reissue";
+            HttpRequestMessage? capturedRequest = null;
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback<HttpRequestMessage, CancellationToken>((req, _) => capturedRequest = req)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(JsonSerializer.Serialize(new Card
+                    {
+                        Id = "crd-new",
+                        UserId = null!,
+                        LastFourDigits = null!,
+                        Expiration = null!,
+                        EmbossedName = null!
+                    }))
+                });
+
+            // Act
+            await _cardsResource.ReissueAsync(cardId, request, idempotencyKey);
+
+            // Assert
+            capturedRequest.Should().NotBeNull();
+            capturedRequest!.Options.TryGetValue(
+                    new HttpRequestOptionsKey<string>("IdempotencyKey"),
+                    out var actualKey)
+                .Should()
+                .BeTrue();
+            actualKey.Should().Be(idempotencyKey);
+        }
+
+        [TestMethod]
+        public async Task ReissueAsync_WithValidationError_ThrowsValidationException()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var request = new ReissueCardRequest
+            {
+                Reason = ReissueReason.Lost
+            };
+
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.BadRequest,
+                Content = new StringContent("Digital cards cannot be reissued")
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<KulipaValidationException>(() =>
+                _cardsResource.ReissueAsync(cardId, request));
+        }
+
+        [TestMethod]
         public async Task HandleErrorResponse_WithVariousStatusCodes_ThrowsCorrectExceptions()
         {
             // Arrange
