@@ -11,6 +11,30 @@ namespace Kulipa.Sdk.Resources
     public interface ICardsResource
     {
         /// <summary>
+        ///     Fetch a card's spending control settings and usage.
+        /// </summary>
+        /// <param name="cardId">Card identifier.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>List of spending controls with usage information.</returns>
+        Task<IReadOnlyList<SpendingControlUsage>> GetSpendingControlsAsync(
+            string cardId,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     Add a spending control to the card.
+        /// </summary>
+        /// <param name="cardId">Card identifier.</param>
+        /// <param name="request">The spending control to create.</param>
+        /// <param name="idempotencyKey">Optional idempotency key for the request.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>The created spending control setting.</returns>
+        Task<SpendingControlSetting> CreateSpendingControlAsync(
+            string cardId,
+            CreateSpendingControlRequest request,
+            string? idempotencyKey = null,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         ///     A POST request sent to create a card. Prior to create a card, the user must have completed KyC and verified his
         ///     wallet.
         /// </summary>

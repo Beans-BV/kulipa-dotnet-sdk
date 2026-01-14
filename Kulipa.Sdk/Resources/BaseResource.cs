@@ -59,6 +59,29 @@ namespace Kulipa.Sdk.Resources
         }
 
         /// <summary>
+        ///     Generic GET operation for retrieving a list of entities (non-paged).
+        /// </summary>
+        /// <typeparam name="T">The entity type in the list.</typeparam>
+        /// <param name="resourcePath">The API path (e.g., "cards/{id}/spending-controls").</param>
+        /// <param name="id">The parent entity ID.</param>
+        /// <param name="idParameterName">The parameter name for validation (e.g., "cardId").</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>The list of entities.</returns>
+        protected async Task<IReadOnlyList<T>> ListAsync<T>(
+            string resourcePath,
+            string id,
+            string idParameterName,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateId(id, idParameterName);
+
+            var response = await _httpClient.GetAsync(resourcePath, cancellationToken);
+            await EnsureSuccessStatusCode(response);
+
+            return await DeserializeResponse<List<T>>(response, cancellationToken);
+        }
+
+        /// <summary>
         ///     Generic POST operation for creating entities with optional idempotency.
         /// </summary>
         /// <typeparam name="TRequest">The request model type.</typeparam>

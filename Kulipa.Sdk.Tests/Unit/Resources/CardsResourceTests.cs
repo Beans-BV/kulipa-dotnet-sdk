@@ -649,6 +649,293 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
         }
 
         [TestMethod]
+        public async Task GetSpendingControlsAsync_WithValidId_ReturnsSpendingControls()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var expectedControls = new List<SpendingControlUsage>
+            {
+                new()
+                {
+                    Id = "scl-111e4567-e89b-12d3-a456-426614174000",
+                    Description = "Daily spending limit",
+                    Type = SpendingControlType.Purchase,
+                    Config = new SpendingControlConfigResponse
+                    {
+                        Period = SpendingControlPeriod.Daily,
+                        Limit = 10000
+                    },
+                    AvailableAmount = 7500
+                },
+                new()
+                {
+                    Id = "scl-222e4567-e89b-12d3-a456-426614174000",
+                    Description = "Block gambling merchants",
+                    Type = SpendingControlType.BlockedMcc,
+                    Config = new SpendingControlConfigResponse
+                    {
+                        Values = new List<string> { "7995", "7800" }
+                    }
+                }
+            };
+
+            var responseJson = JsonSerializer.Serialize(expectedControls);
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Get &&
+                        req.RequestUri!.PathAndQuery == $"/cards/{cardId}/spending-controls"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act
+            var result = await _cardsResource.GetSpendingControlsAsync(cardId);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(2);
+
+            result[0].Id.Should().Be("scl-111e4567-e89b-12d3-a456-426614174000");
+            result[0].Type.Should().Be(SpendingControlType.Purchase);
+            result[0].Config.Period.Should().Be(SpendingControlPeriod.Daily);
+            result[0].Config.Limit.Should().Be(10000);
+            result[0].AvailableAmount.Should().Be(7500);
+
+            result[1].Id.Should().Be("scl-222e4567-e89b-12d3-a456-426614174000");
+            result[1].Type.Should().Be(SpendingControlType.BlockedMcc);
+            result[1].Config.Values.Should().BeEquivalentTo(new[] { "7995", "7800" });
+            result[1].AvailableAmount.Should().BeNull();
+        }
+
+        [TestMethod]
+        public async Task GetSpendingControlsAsync_WithEmptyList_ReturnsEmptyList()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent("[]", Encoding.UTF8, "application/json")
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Get &&
+                        req.RequestUri!.PathAndQuery == $"/cards/{cardId}/spending-controls"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act
+            var result = await _cardsResource.GetSpendingControlsAsync(cardId);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow("   ")]
+        public async Task GetSpendingControlsAsync_WithInvalidId_ThrowsArgumentException(string invalidId)
+        {
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<ArgumentException>(() =>
+                _cardsResource.GetSpendingControlsAsync(invalidId));
+        }
+
+        [TestMethod]
+        public async Task CreateSpendingControlAsync_WithPurchaseLimit_ReturnsSpendingControlSetting()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var request = new CreateSpendingControlRequest
+            {
+                Description = "Daily spending limit",
+                Type = SpendingControlType.Purchase,
+                Config = SpendingControlConfig.ForPurchaseLimit(SpendingControlPeriod.Daily, 10000)
+            };
+
+            var expectedResponse = new SpendingControlSetting
+            {
+                Id = "scl-111e4567-e89b-12d3-a456-426614174000",
+                Description = request.Description,
+                Type = SpendingControlType.Purchase,
+                Config = new SpendingControlConfigResponse
+                {
+                    Period = SpendingControlPeriod.Daily,
+                    Limit = 10000
+                }
+            };
+
+            var responseJson = JsonSerializer.Serialize(expectedResponse);
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.Created,
+                Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Post &&
+                        req.RequestUri!.PathAndQuery == $"/cards/{cardId}/spending-controls"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act
+            var result = await _cardsResource.CreateSpendingControlAsync(cardId, request);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(expectedResponse.Id);
+            result.Description.Should().Be(request.Description);
+            result.Type.Should().Be(SpendingControlType.Purchase);
+            result.Config.Period.Should().Be(SpendingControlPeriod.Daily);
+            result.Config.Limit.Should().Be(10000);
+        }
+
+        [TestMethod]
+        public async Task CreateSpendingControlAsync_WithBlockedMcc_ReturnsSpendingControlSetting()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var mccCodes = new[] { "7995", "7800", "7801" };
+            var request = new CreateSpendingControlRequest
+            {
+                Description = "Block gambling merchants",
+                Type = SpendingControlType.BlockedMcc,
+                Config = SpendingControlConfig.ForBlockedMcc(mccCodes)
+            };
+
+            var expectedResponse = new SpendingControlSetting
+            {
+                Id = "scl-222e4567-e89b-12d3-a456-426614174000",
+                Description = request.Description,
+                Type = SpendingControlType.BlockedMcc,
+                Config = new SpendingControlConfigResponse
+                {
+                    Values = mccCodes.ToList()
+                }
+            };
+
+            var responseJson = JsonSerializer.Serialize(expectedResponse);
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.Created,
+                Content = new StringContent(responseJson, Encoding.UTF8, "application/json")
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Post &&
+                        req.RequestUri!.PathAndQuery == $"/cards/{cardId}/spending-controls"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act
+            var result = await _cardsResource.CreateSpendingControlAsync(cardId, request);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(expectedResponse.Id);
+            result.Description.Should().Be(request.Description);
+            result.Type.Should().Be(SpendingControlType.BlockedMcc);
+            result.Config.Values.Should().BeEquivalentTo(mccCodes);
+        }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow("   ")]
+        public async Task CreateSpendingControlAsync_WithInvalidCardId_ThrowsArgumentException(string invalidId)
+        {
+            // Arrange
+            var request = new CreateSpendingControlRequest
+            {
+                Description = "Test",
+                Type = SpendingControlType.Purchase,
+                Config = SpendingControlConfig.ForPurchaseLimit(SpendingControlPeriod.Daily, 1000)
+            };
+
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<ArgumentException>(() =>
+                _cardsResource.CreateSpendingControlAsync(invalidId, request));
+        }
+
+        [TestMethod]
+        public async Task CreateSpendingControlAsync_WithNullRequest_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+                _cardsResource.CreateSpendingControlAsync(cardId, null!));
+        }
+
+        [TestMethod]
+        public async Task CreateSpendingControlAsync_WithIdempotencyKey_AddsToRequestOptions()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var request = new CreateSpendingControlRequest
+            {
+                Description = "Daily limit",
+                Type = SpendingControlType.Purchase,
+                Config = SpendingControlConfig.ForPurchaseLimit(SpendingControlPeriod.Daily, 5000)
+            };
+            var idempotencyKey = "test-idempotency-key-spending";
+            HttpRequestMessage? capturedRequest = null;
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback<HttpRequestMessage, CancellationToken>((req, _) => capturedRequest = req)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.Created,
+                    Content = new StringContent(JsonSerializer.Serialize(new SpendingControlSetting
+                    {
+                        Id = "scl-123",
+                        Description = "Test",
+                        Config = new SpendingControlConfigResponse()
+                    }))
+                });
+
+            // Act
+            await _cardsResource.CreateSpendingControlAsync(cardId, request, idempotencyKey);
+
+            // Assert
+            capturedRequest.Should().NotBeNull();
+            capturedRequest!.Options.TryGetValue(
+                    new HttpRequestOptionsKey<string>("IdempotencyKey"),
+                    out var actualKey)
+                .Should()
+                .BeTrue();
+            actualKey.Should().Be(idempotencyKey);
+        }
+
+        [TestMethod]
         public async Task HandleErrorResponse_WithVariousStatusCodes_ThrowsCorrectExceptions()
         {
             // Arrange
