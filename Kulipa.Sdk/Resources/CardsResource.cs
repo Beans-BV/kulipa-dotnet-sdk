@@ -148,5 +148,21 @@ namespace Kulipa.Sdk.Resources
                 idempotencyKey,
                 cancellationToken);
         }
+        
+        /// <inheritdoc />
+        public async Task<Card> ReissueAsync(
+            string cardId,
+            ReissueCardRequest request,
+            string? idempotencyKey = null,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateId(cardId, nameof(cardId));
+
+            return await PostAsync<ReissueCardRequest, Card>(
+                $"cards/{cardId}/reissue",
+                request,
+                idempotencyKey,
+                cancellationToken);
+        }
     }
 }
