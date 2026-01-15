@@ -164,5 +164,17 @@ namespace Kulipa.Sdk.Resources
                 new Dictionary<string, string?>(),
                 pagedRequest, cancellationToken);
         }
+
+        /// <inheritdoc />
+        public async Task<WalletBalance> GetBalanceAsync(
+            string walletId,
+            CancellationToken cancellationToken = default)
+        {
+            return await GetByIdAsync<WalletBalance>(
+                $"wallets/{walletId}/balance",
+                walletId,
+                nameof(walletId),
+                cancellationToken);
+        }
     }
 }
