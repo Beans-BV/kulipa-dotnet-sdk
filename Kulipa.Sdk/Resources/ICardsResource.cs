@@ -35,6 +35,17 @@ namespace Kulipa.Sdk.Resources
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        ///     Delete a spending control from the card.
+        /// </summary>
+        /// <param name="cardId">Card identifier.</param>
+        /// <param name="spendingControlId">Spending control identifier.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        Task DeleteSpendingControlAsync(
+            string cardId,
+            string spendingControlId,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         ///     A POST request sent to create a card. Prior to create a card, the user must have completed KyC and verified his
         ///     wallet.
         /// </summary>

@@ -936,6 +936,97 @@ namespace Kulipa.Sdk.Tests.Unit.Resources
         }
 
         [TestMethod]
+        public async Task DeleteSpendingControlAsync_WithValidIds_ReturnsSuccessfully()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var spendingControlId = "scl-111e4567-e89b-12d3-a456-426614174000";
+
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.NoContent
+            };
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.Is<HttpRequestMessage>(req =>
+                        req.Method == HttpMethod.Delete &&
+                        req.RequestUri!.PathAndQuery == $"/cards/{cardId}/spending-controls/{spendingControlId}"),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act & Assert - should not throw
+            await _cardsResource.DeleteSpendingControlAsync(cardId, spendingControlId);
+
+            _httpMessageHandlerMock.Protected().Verify(
+                "SendAsync",
+                Times.Once(),
+                ItExpr.Is<HttpRequestMessage>(req =>
+                    req.Method == HttpMethod.Delete &&
+                    req.RequestUri!.PathAndQuery == $"/cards/{cardId}/spending-controls/{spendingControlId}"),
+                ItExpr.IsAny<CancellationToken>());
+        }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow("   ")]
+        public async Task DeleteSpendingControlAsync_WithInvalidCardId_ThrowsArgumentException(string invalidId)
+        {
+            // Arrange
+            var spendingControlId = "scl-111e4567-e89b-12d3-a456-426614174000";
+
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<ArgumentException>(() =>
+                _cardsResource.DeleteSpendingControlAsync(invalidId, spendingControlId));
+        }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow("   ")]
+        public async Task DeleteSpendingControlAsync_WithInvalidSpendingControlId_ThrowsArgumentException(string invalidId)
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+
+            // Act & Assert
+            await Assert.ThrowsExactlyAsync<ArgumentException>(() =>
+                _cardsResource.DeleteSpendingControlAsync(cardId, invalidId));
+        }
+
+        [TestMethod]
+        public async Task DeleteSpendingControlAsync_WithNotFound_ThrowsApiException()
+        {
+            // Arrange
+            var cardId = "crd-123e4567-e89b-12d3-a456-426614174000";
+            var spendingControlId = "scl-nonexistent";
+
+            var httpResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Spending control not found")
+            };
+            httpResponse.Headers.Add("x-request-id", "req-789");
+
+            _httpMessageHandlerMock
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(httpResponse);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsExactlyAsync<KulipaApiException>(() =>
+                _cardsResource.DeleteSpendingControlAsync(cardId, spendingControlId));
+
+            exception.RequestId.Should().Be("req-789");
+        }
+
+        [TestMethod]
         public async Task HandleErrorResponse_WithVariousStatusCodes_ThrowsCorrectExceptions()
         {
             // Arrange
