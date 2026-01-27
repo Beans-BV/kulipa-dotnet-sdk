@@ -57,7 +57,7 @@ namespace Kulipa.Sdk.Models.Responses.Wallets
         ///     TODO: Update this when Kulipa updates their docs after adding support for Stellar.
         /// </summary>
         [JsonPropertyName("publicKey")]
-        public required string PublicKey { get; init; }
+        public string? PublicKey { get; init; }
 
         /// <summary>
         ///     Creation date.
