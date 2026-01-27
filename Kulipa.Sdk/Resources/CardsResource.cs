@@ -192,5 +192,19 @@ namespace Kulipa.Sdk.Resources
                 idempotencyKey,
                 cancellationToken);
         }
+
+        /// <inheritdoc />
+        public async Task DeleteSpendingControlAsync(
+            string cardId,
+            string spendingControlId,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateId(cardId, nameof(cardId));
+            ValidateId(spendingControlId, nameof(spendingControlId));
+
+            await DeleteAsync(
+                $"cards/{cardId}/spending-controls/{spendingControlId}",
+                cancellationToken);
+        }
     }
 }

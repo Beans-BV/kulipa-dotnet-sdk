@@ -245,6 +245,19 @@ namespace Kulipa.Sdk.Resources
         }
 
         /// <summary>
+        ///     Generic DELETE operation for removing entities (returns no content).
+        /// </summary>
+        /// <param name="resourcePath">The API path (e.g., "cards/{id}/spending-controls/{spendingControlId}").</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        protected async Task DeleteAsync(
+            string resourcePath,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await _httpClient.DeleteAsync(resourcePath, cancellationToken);
+            await EnsureSuccessStatusCode(response);
+        }
+
+        /// <summary>
         ///     Validates that an ID parameter is not null or empty.
         /// </summary>
         /// <param name="id">The ID to validate.</param>
